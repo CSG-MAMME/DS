@@ -1,0 +1,61 @@
+--------------------------------------------------------------------------
+
+Name and email address: 
+    Carlos Segarra
+    carlos@carlossegarra.com
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: Do you need a Blockchain?
+Author(s): Karl Wust, Arthur Gervais
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+The structured methodology to determine the appropriate technical solution, permisioned(-less) blockchain or centralized database, for different problems.
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+The paper has, mostly, an informative importance. This is, it is very educative and could be used to mitigate some big missunderstandings on Blockchains. However, researchers in the field should base their findings on more technical resources.
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+The initial background section is pinnacle to understand the rest of the paper, but it is very well explained and easy to follow.
+
+4. Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+
+Maybe the authors could back some of their claims with more real data.
+
+As a disseminative piece of work, it lacks technical and evaluation details, but these also fall outside the scope of the work.
+ 
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+The main differences between permissioned and permissionless blockchains together with a mechanism to identify when they are really necessary.
+
+7. Do you think this paper should be included in next year's DS course?
+
+Yes
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+The article presents a well-documented and well-written introduction to Blockchain systems, together with a structured methodology to determine if a given application would beneffit from a Blockchain or some other sort of centralized storage or distributed system would fit better. Lastly, they apply their methodology to three specific use-cases which are believed to beneffit from Blockchain-based technologies.
+
+The text is very well-written and easy to follow. In the initial introduction, the diffrences between permissioned, permissionless blockchains, and centralized databases are presented, and their properties described and exemplified. The methodology is easy to understand and to apply, and the use-cases are meaningful and highlight the importance of the topic.
+
+In the midst of the blockchain hype, a disseminative text like the one presented can be very beneficial and educative. As an effort of dissemination, it lacks proper scientific contribution, and claims are usually backed on assumptions or empirical observations, rather than measurable arguments. However, this approach fits with the scope of the paper.
+------------------------------------------------------------------------
