@@ -1,0 +1,81 @@
+--------------------------------------------------------------------------
+
+Name and email address: 
+    Carlos Segarra
+    carlos@carlossegarra.com
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: Building Content-Based Publish/Subscribe Systems with Distributed Hash Tables
+Author(s): David Tam, Reza Azimi, and Hans-Arno Jacobsen
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+The technique used to translate content-based requests for the topic-based pub/sub middleware, i.e. schemas.
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+The significance of the paper lies in the novelty of the prototype, the design.
+Other researchers can follow the lead and try similar approaches for content-based publish subscribe, althouhg using the same exact one is discouraged.
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+The concept of indexes in schemas, and how they are used to optimized performance is not clearly detailed and at all lights pinnacle in the application's performance.
+
+4. Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+ 
+As suggested in the conclusions by the same authors, the evaluation is succinct.
+More, and more realistic experiments should be performed, in different network topologies and under realistic network constraints (latency, jitter, ...).
+
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+They should try to decouple the user-defined input from the end-system performance.
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+Differences between topic and content based publish subscribe systems together with the concept of multicast even trees for distributed environments.
+
+7. Do you think this paper should be included in next year's DS course?
+
+Yes
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+The paper presents a content-based publish/subscribe system built on top of a content-based pub/sub middleware that relies on DHTs.
+In particular the authors rely on the Scribe/Pastry stack.
+
+A key design feature are schemas for extracting the content of a publish/subscribe request, generating the adequate key, and then forwarding the request to the adequate node.
+A schema is a pre-defined, and pre-shared among all the nodes in the system.
+It's design is critical for the performance of the application, and it is up to the programmer to choose it.
+To improve scalability, a multicast event tree is used to distribute the task processing amontg all nodes subscribed to the same key.
+Lastly, the authors deal with range queries via space partitioning ,hence generating per-range keys, and with duplicate notifications with local already-viewed lists with short expiration.
+For the implementation, they rely completely on already-existing solutions.
+
+The evaluation focuses on the system's scalability.
+The results show an intimate dependence on the schema design in order to have high hit rates, and the beneffits of using multicast trees.
+
+The first concern I have with the system is that it's performance seems really application and programmer-dependant.
+The choice of indexes seems arbitrary, so does the generation of the schemas, and lastly publishers are expected to provide an index digest for each entry in the schema.
+All these assumptions are a bit unrealistiic, considering the sort of applications who would beneffit from a content-based distributed pub/sub middleware.
+
+Secondly, and with regard to the evaluation, again the results are very implementation dependant.
+The same system with different configurations may have very different performances.
+Further, the simulated workload includes subscribe and then publish and not an interleaving of those which would be of more relevance.
+
+Lastly, they fail to examine fault-tolerance and compare with any other existint system.
+
+------------------------------------------------------------------------

@@ -1,0 +1,145 @@
+REVIEWERS ARE ENCOURAGED TO PROVIDE SUBSTANTITIVE 
+COMMENTS SUPPORTING THEIR NUMERICAL SCALE RATINGS.
+REVIEWS WITHOUT SUCH COMMENTS MAY NOT BE
+CONSIDERED IN THE OVERALL RATING OF THE PAPER.
+--------------------------------------------------------------------------
+
+Name and email address: 
+
+Please assess your competence in the subject matter 
+of the paper by placing an X in the appropriate box:
+
+   _____________________________________________________
+   |  Marginal  |  General   |  Strong    |  Expert    |
+   |   (0.4)    |   (0.6)    |   (0.8)    |   (1.0)    |
+   |____________|____________|____________|____________|
+   |____________|____________|____________|____________|
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: 
+Author(s): 
+------------------------------------------------------------------------ Rating Category    		Your Rating       Scale Definition
+------------------------------------------------------------------------
+Evaluation of Work            					|-----| 
+
+5=Excellent work and a major contribution and Contribution	 
+4=Good solid work of some importance             	 	 
+3=Solid work but marginal contribution				 
+2=Marginal work and very minor contribution			     
+1=Very questionable work and contribution				 
+------------------------------------------------------------------------
+Originality / Novelty  							|-----| 
+                   
+5=Highly original work
+4=Contains an original contribution
+3=Somewhat original 
+2=Variation of a known concept 
+1=Complete lack of original ideas
+------------------------------------------------------------------------
+Significance of the Topic						|-----|     
+
+5=Excellent
+4=Very Good
+3=Good
+2=YAPA (yet another paper about...)
+1=Obsolete Topic
+------------------------------------------------------------------------
+Quality of presentation					               |-----|        
+
+5=Very good
+4=Basically well written
+3=Readable
+2=Needs considerable work
+1=Unacceptably bad
+------------------------------------------------------------------------
+Technical Correctness                     			 |-----|
+
+5=Very good
+4=Good 
+3=Flaws but Easy to Correct 
+2=Some Flaws
+1=Unacceptably bad
+------------------------------------------------------------------------
+Level of Reader Interest                        		|-----|
+
+5=Excellent
+4=Very Good
+3=Good
+2=Fair 
+1=Poor
+------------------------------------------------------------------------
+Practical Utility            						 |-----|  
+
+5=Excellent
+4=Very Good
+3=Good
+2=Fair
+1=Poor
+------------------------------------------------------------------------
+Relevance to the DS course 		     			    |-----|          
+
+5=Excellent
+4=Very Good
+3=Good
+2=Weak 
+1=Totally out of Scope 
+------------------------------------------------------------------------
+Future Importance to the DS course 					|-----|      
+
+5=An emerging important area
+4=A strong area for the foreseeable future
+3=An important and timely topic
+2=An emerging area of possible relevance
+1=An area of diminishing interest 
+------------------------------------------------------------------------
+Overall Rating                             			|-----|      
+
+5=Strong Accept (very good quality)
+4=Accept (good quality)
+3=Accept if room (marginal quality)
+2=Likely reject (low quality)
+1=Definitely reject (has no merit)
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+
+4 Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+ 
+
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+
+7. Do you think this paper should be included in next year's DS course?
+
+
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+
+
+
+------------------------------------------------------------------------
