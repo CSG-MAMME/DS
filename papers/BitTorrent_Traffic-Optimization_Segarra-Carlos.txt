@@ -66,15 +66,3 @@ The proposed design consits of a three-step, hierarchical, protocol:
 - 3rd: within each region, nodes are sorted by proximity to the network agent.
 All the information is centralized in an ALTO server.
 ------------------------------------------------------------------------
-
-Questions
-
-+ What is the actual contribution of the work?
-
-+ Evaluation
-    + What added value do experiments provide? Are they representative of the work being presented?
-    + In other words, are they showing what they want to prove?
-    + Are results statistically relevant?
-    + Do they compare against other solutions?
-
-+ Is the definition of a centralized ALTO server coherent with the distributed p2p setting?

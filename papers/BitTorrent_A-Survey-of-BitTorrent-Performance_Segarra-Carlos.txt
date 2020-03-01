@@ -1,0 +1,65 @@
+--------------------------------------------------------------------------
+
+Name and email address: 
+    Carlos Segarra
+    carlos@carlossegarra.com
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: A Survey of BitTorrent Performance
+Author(s): Raymond Lei Xia, and Jogesh K. Muppala
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+An in-depth literature review of the design, performance, and enhancmenets of the BitTorrent P2P file-sharing protocol.
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+The main significance of the paper is that it encompasses together several (filtered) resources about Bittorrent, providing a great starting point for new researchers trying to enter the field, or established ones looking for quality references.
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+The most important part is being able to distill the important concepts (architecutrally and performance enhancning hints) from the vast amount of information available.
+
+4. Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+
+Include a TL-DR section to grasp a general idea of the conclusions they reach.
+
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+The paper provides a great introduction to BitTorrent and more generally peer-to-peer communication protocols, and is very explicative, educative, and well written.
+
+7. Do you think this paper should be included in next year's DS course?
+
+Yes
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+This paper does an in-depth dive into BitTorrent, and surveys performance studies from 2003 to 2008 on this peer-to-peer file-sharing protocol.
+It also surveys the suggested enhancments proposed by the analyzed works.
+
+BitTorrent is a P2P file sharing system which organizes peers that are interested in downloading the same file into an overlay network called a Torrent.
+Contrary to other trditional systems, BitTorrent relies on cooperation among peers for downloading files, and peers are expected to use a centralized search facility.
+BitTorrent implementations ignore the underlying topology and as a consequence result in large amounts of cross-ISP traffic.
+
+The steps in sharing a file are: download the .torrent file, contact the tracker, connect to peers, and exchange the file by pieces.
+The main mechanisms employed by BitTorrent consist in peer and piece selection strategies.
+
+Then the authors provide a very in-depth study of the performance analysis of BitTorrent in the literature.
+------------------------------------------------------------------------

@@ -49,8 +49,9 @@
 \subtitle{Master in Research in Informatics - MIRI}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % date of the presentation (leave empty for no date, default is today)
-\date[\today] % leave empty for no date in footer
-    {\datedayname, \today}
+\date[March 3, 2020] % leave empty for no date in footer
+    {Tuesday March 3, 2020}
+    %{\datedayname, \today}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % authors and their affiliations (the latter is optional)
 \author[] % leave empty for no author in footer
@@ -125,182 +126,77 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Bin Packing Problem}
-    \framesubtitle{Formal Statement}
-
-    \vspace{-10pt}
-
-    Given a set of bins $S_1, S_2, \dots$ with the same size $V$ and a list of $n$ items with sizes $a_1, \dots, a_n$ to pack,
-    \begin{equation*}
-        \begin{aligned}
-            \text{minimize } & B = \sum\limits_{i = 1}^{n} y_i \\
-            \text{subject to } & B \geq 1 \\
-            & \sum\limits_{j = 1}^{n}a_jx_{ij} \leq V y_i, \quad \quad \forall i \in \lbrace 1, \dots, n\rbrace \\
-            & \sum_{i = 1}^n x_{ij} = 1 \qquad \qquad x_{ij}, y_i \in \lbrace 0, 1 \rbrace \\
-            %& x_i \in \lbrace 0, 1 \rbrace
-        \end{aligned}
-    \end{equation*}
-    \hspace{20pt} where $y_i = 1$ if bin $S_i$ is used and $x_{ij} = 1$ if item $a_j$ is put into bin $S_i$.
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Bin Packing in Geometry}
-    \framesubtitle{1D Bin Packing}
-    
-    \begin{itemize}
-        \item The classic representation of the Bin Packing problem has a straight-forward 2D geometric representation.
-    \end{itemize}
-
-    \vspace{-10pt}
-
-    \begin{figure}
-        \centering
-        \resizebox{0.8\linewidth}{!}{
-        \begin{tikzpicture}
-            \foreach \x in {0,...,7}
-            {
-                \begin{scope}
-                    \pgfmathparse{250*rnd+5}
-                    \edef\tmpi{\pgfmathresult}
-                    \pgfmathparse{210*rnd+45}
-                    \edef\tmpii{\pgfmathresult}
-                    \pgfmathparse{230*rnd+25}
-                    \edef\tmpiii{\pgfmathresult}
-                    \pgfmathparse{0.75*rnd+0.25}
-                    \edef\opac{\pgfmathresult}
-                    \definecolor{MyColor}{RGB}{\tmpi,\tmpii,\tmpiii}    
-                    \pgfmathparse{int(4*rnd) + 1}
-                    \edef\rndheight{\pgfmathresult}
-                    %\draw[fill=MyColor!40] (0,\x*0.5) rectangle (1,0.5*\x + .5) node[pos=.5] (orig-\x) {$a_{\x}$};
-                    \draw[fill=MyColor!40] (\x, 0) rectangle (\x + 1, \rndheight) node[anchor=south] (orig-\x) at (\x + 0.5, \rndheight) {$a_{\x}$}; 
-                \end{scope}
-            }
-            \foreach \y in {0,...,5}
-            {
-                \begin{scope}
-                    \draw (9 + \y, 0) rectangle (10 + \y, 5) node[anchor=south east] (bin-\y) {$S_{\y}$};
-                    %\draw (5 + \y, 0) rectangle (6 + \y, \tmpi);
-                \end{scope}
-            }
-        \end{tikzpicture}
-        }
-        %\caption{Classsic representation of the bin packing problem.}
-    \end{figure}
-\end{frame}
-
-
-\begin{frame}
-    \frametitle{Solving BP: Greedy Approximation Algorithms}
-    \framesubtitle{First Fit (FF), First Fit Decreasing (FFD)}
+    \frametitle{Background Concepts}
+    \framesubtitle{Bittorrent \& ALTO}
 
     \begin{columns}
-        \begin{column}{.45\textwidth}
-            \textbf{First Fit Algorithm:}
+        \begin{column}{.55\textwidth}
+            \textbf{Tracker-Based Bittorrent Protocol:}
             \begin{itemize}
-                \item Try to fit each element in the current set of opened bins. If it fits in none, open a new bin.
-                \item Runtime $\mathcal{O}(n \log n)$
-                \item Approximation factor: $1.7$
+                \item \textbf{Bittorrent} is a peer-to-peer communication protocol for file sharing.
+                \item A \textbf{Bittorrent} tracker is a server that assists in the communication between peers.
+                \item It keeps track of where file copies reside.
             \end{itemize}
-            \textbf{First Fit Decreasing Algorithm:}
+            \textbf{The ALTO Service Architecture:}
             \begin{itemize}
-                \item Order the elements to sort, and apply First Fit.
-                \item Runtime $\mathcal{O}(n \log n)$
-                \item Approximation factor: $1.222$
+                \item The \textbf{\href{https://tools.ietf.org/html/rfc7285}{Application Layer Traffic Optimization}} services provide network information with the goal of modifying network resources consumption.
             \end{itemize}
         \end{column}
-        \begin{column}{.45\textwidth}
-            \begin{algorithm2e}[H]
-                \KwIn{Some Input}
-                \While{$item \gets S.\text{pop}()$}
-                {
-                    \For{$bin \in B$}
-                    {
-                        \If{$\text{fits}(item, bin)$}
-                        {
-                            $\text{put}(item, bin)$\;
-                            \textbf{break}\;
-                        }
-                    }
-                    \Else
-                    {
-                        $\text{put}(item, \text{new}(bin))$\;
-                    }
-                    % If it does not fit in any bin, open new one
-                }
-                \caption{First Fit Algorithm}
-            \end{algorithm2e}
+        \hfill
+        \begin{column}{.35\textwidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=\textwidth]{./images/bit-torrent.png}
+                \caption{Bittorrent Tracker Protocol Architecture}
+            \end{figure}
         \end{column}
     \end{columns}
 
-    \tiny
-    \begin{description}
-        \item $[1]$ Maxence Delorme, Manuel Iori, Silvano Martello. \textbf{\textit{"Bin-Packing and Cutting Stock Problems: Mathematical Models and Exact Algorithms"}}.  Section 2.3.
-    \end{description}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Modern Application: VM Placement}
+    \frametitle{Proposed Architecture}
 
-    \begin{figure}[h!]
-        \centering
-        \resizebox{0.9\linewidth}{!}{
-        \begin{tikzpicture}
-            % Initial Goal Function
-            \node[align=left] at (3, 6) {\textbf{Objective Function:} \\ - Minimize Economical Cost \\ - Minimize Energy Consumption \\ - Maximize Data Locality};
+    \vspace{-15pt}
+    \begin{columns}
+        \begin{column}{.35\textwidth}
+            \textbf{Exectuion Flow:}
+            \begin{enumerate}
+                \item Peer node queries tracker for list of peers.
+                \item Tracker forwards request to ALTO Server.
+                \item Server delegates to respective WMN Agent.
+                \item Server aggregates responses and returns sorted list to Tracker.
+                \item Tracker forwards response to asking peer.
+            \end{enumerate}
+        \end{column}
+        \begin{column}{.70\textwidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=1.05\textwidth]{./images/architecture.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
 
-            % Resource Requests
-            \draw[dashed] (2,1.8) rectangle (7, 4);
-            \node[anchor=south] at (4.5, 4) {\textbf{Resource Requests}($RR$)};
-            \node[anchor=north] at (4.5, 1.8) {Online or Offline fashion};
-            % RR1
-            \draw[fill=blue!30] (6.15, 2.5) rectangle (6.85, 3.5) node[pos=.5] {$RR_1$};
-            \draw[<->] (6.15, 2.4) -- (6.85, 2.4) node[anchor=north, pos=.5] {$M$};
-            \draw[<->] (6.05, 2.5) -- (6.05, 3.5) node[anchor=east, pos=.5] {$D$};
-            % RR2
-            \draw[fill=green!30] (5.15, 2.5) rectangle (5.45, 3);
-            \node[anchor=south] at (5.3, 3) {$RR_2$};
-            \draw[<->] (5.15, 2.4) -- (5.45, 2.4) node[anchor=north, pos=.5] {$M$};
-            \draw[<->] (5.05, 2.5) -- (5.05, 3) node[anchor=east, pos=.5] {$D$};
-            % RR3
-            \draw[fill=brown!30] (3.65, 2.5) rectangle (4.35, 3.85) node[pos=.5] {$RR_3$};
-            \draw[<->] (3.65, 2.4) -- (4.35, 2.4) node[anchor=north, pos=.5] {$M$};
-            \draw[<->] (3.55, 2.5) -- (3.55, 3.85) node[anchor=east, pos=.5] {$D$};
-            \node at (2.6, 3) {\textbf{$\dots$}};
+\end{frame}
 
+\begin{frame}
+    \frametitle{Open Questions}
 
-            % DC
-            \node at (13, 7) {\textbf{Datacenters ($DC$)}};
-
-            % Datacenter 1
-            \draw[fill=gray!10, dashed] (8,0) rectangle (12, 6);
-            \node[anchor=north] at (10, 0) {\textbf{Physical Machines ($PM$)}};
-            \node[anchor=south] at (10, 6) {$DC_1$};
-            \draw[fill=blue!15] (8.15,0.5) rectangle (8.65, 5.5);
-            \node[anchor=north] at (8.4, 0.5) {$PM_1$};
-            \draw[fill=green!15] (8.7,0.5) rectangle (8.95, 5.5);
-            \node[anchor=south] at (8.825, 5.5) {$PM_2$};
-            \draw[fill=yellow!15] (9,0.5) rectangle (9.45, 5.5);
-            \node[anchor=north] at (9.22, 0.5) {$PM_3$};
-            \draw[fill=red!15] (9.5,0.5) rectangle (10.35, 5.5);
-            \node[anchor=south] at (9.925, 5.5) {$PM_4$};
-            \node at (10.85, 3) {\textbf{$\dots$}};
-            \draw[fill=orange!15] (11.35, 0.5) rectangle (11.85, 5.5);
-            \node[anchor=north] at (11.525, 0.5) {$PM_n$};
-            \node at (13, 3) {\textbf{$\dots$}};
-
-            % Datacenter 2
-            \draw[fill=gray!15, dashed] (14,0) rectangle (16, 6);
-            \node[anchor=south] at (15, 6) {$DC_m$};
-            \node at (15, 3) {\textbf{$\dots$}};
-        \end{tikzpicture}
-        }
-    \end{figure}
+    \begin{enumerate}
+        \item What's your opinion about the evaluation section?
+        \begin{itemize}
+            \item What experiments do they lay out?
+            \item What do they show?
+            \item What does that prove?
+            \item What is the statistical relevance of the results?
+            \item Who they compare against?
+        \end{itemize}
+        \item Are Tracker-Based Bittorent Protocols used anymore?
+        \item What's your opinion on the design choice for the ALTO Server?
+    \end{enumerate}
 
 \end{frame}
 
 
-\section*{Questions \& Observations}
-\sectionframe
 
 \end{document}
