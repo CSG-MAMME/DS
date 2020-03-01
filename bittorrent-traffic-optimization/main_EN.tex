@@ -1,0 +1,306 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Carlos Segarra's Beamer Presentation Template. All credits
+%% to Vincent Labatut from whom I took the template and added
+%% my own flavour to it. Kudos to <vincent.labatut@univ-avignon.fr>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup Beamer
+\documentclass[10pt,    % default is 11pt, use 10pt for more compact slides
+%    handout,            % collapse all overlays (=animations) and video-invert console text
+    english,            % presentation language (theme supports only french & english)
+    xcolor=table,       % colors in the tables
+    envcountsect,        % include section number in theorem numbers
+    aspectratio=169     % Using 16:9 aspect ratio because 2019
+]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup the theme
+%\usepackage{au/sty/beamerthemeAU}         % no option at all
+\usepackage[light]{csg-temp/sty/beamerthemeAU}   % the "light" option only changes the title and section pages
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup side notes
+\usepackage{pgfpages}                                   % comment all 3 below lines to hide notes
+%\setbeameroption{show notes}                           % alternate content and note slides
+%\setbeameroption{show only notes}                      % only note slides
+%\setbeameroption{show notes on second screen=right}    % dualscreen: right, left, top, bottom
+%\usepackage{enumitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% name of the biblatex file
+\addbibresource{biblio.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% External Packages
+\usepackage{datenumber}
+\usepackage{varwidth}
+
+% Math Mode
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{algorithm2e}
+%\usepackage{multicol}
+%\usepackage[noend]{algpseudocode}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title and subtitle of the presentation (the latter is optional)
+\subtitle{Decentralized Systems} % leave empty if no subtitle
+\title[Decentralized Systems] % leave empty for no title in footer
+    {\normalsize Bittorrent Traffic Optimization \\ \Large Bittorrent traffic optimization in \\ \Large Wireless Mesh Networks with ALTO Service }
+\subtitle{Master in Research in Informatics - MIRI}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% date of the presentation (leave empty for no date, default is today)
+\date[\today] % leave empty for no date in footer
+    {\datedayname, \today}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% authors and their affiliations (the latter is optional)
+\author[] % leave empty for no author in footer
+{F. Paolo d'Elia, G. Di Stasi, S. Avallone, R. Canonico \\\small \textit{Presented by} Carlos Segarra - \texttt{carlos.segarra@estudiant.upc.edu}}
+%{\inst{1} Computer Science Lab, Avignon University -- LIA EA 4128 \texttt{\{firstname.lastname\}@univ-avignon.fr}
+%\and \inst{2} Institute of Disruptive Innovation, University of Excellence \texttt{\{firstname.lastname\}@univ-excell.fr}
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% optional: additional logo (ex. lab)
+%\titlegraphic{\includegraphics[width=3cm,]{images/logo_FME.png}}
+% if you want several logos, put them in a box
+%\titlegraphic{\parbox{3cm}{\includegraphics[width=3cm,]{images/ceri_logo.pdf}\newline\includegraphics[width=3cm,]{images/lia_logo.pdf}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentation speciphic packages
+% \usepackage{multicol}
+% \usepackage[titles]{tocloft}
+% \renewcommand{\cftchapfont}{\normalfont\bfseries}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+\usepackage{tabularx}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%% title page
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{General Information}
+
+    \begin{itemize}
+        \item \textbf{Full Title:} "Bittorrent traffic optimization in Wireless Mesh Networks with ALTO service" $[1]$
+        \item \textbf{Authors:} Francesco Paolo d'Elia, Giovanni Di Stasi, Stefano Avallone, and Roberto Canonico
+        \item \textbf{Published At:} \href{https://ieeexplore.ieee.org/xpl/conhome/5976314/proceeding}{2011 IEEE International Symposium on a World of Wireless, Mobile and Multimedia Networks}
+        \item \textbf{Publishing Date:} 20-24 June 2011
+        \item \textbf{DOI:} \href{https://doi.org/10.1109/WoWMoM.2011.5986177}{10.1109/WoWMoM.2011.5986177}
+    \end{itemize}
+
+
+    \small
+    \begin{description}
+        \item $[1]$ F. P. D'Elia, G. Di Stasi, S. Avallone and R. Canonico, "Bittorrent traffic optimization in Wireless Mesh Networks with ALTO service," 2011 IEEE International Symposium on a World of Wireless, Mobile and Multimedia Networks, Lucca, 2011, pp. 1-6
+    \end{description}
+ 
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{TL-DR}
+    \framesubtitle{A Ten Thousand Feet View}
+
+    \vspace{-25pt}
+
+    \begin{alertblock}{Main Contribution}
+        The paper presents a \textbf{hierarchichal peer organization} to optimize Bittorrent's bandwidth usage in wireless mesh networks.
+    \end{alertblock}
+
+    \begin{block}{Techniques}
+        The authors base on the \textbf{Application Layer Traffic Optimization Service} which provides the peers with knowledge about the underlying network.
+    \end{block}
+
+    \begin{alertblock}{Evaluation Results}
+        They report a $27\%$ time reduction in \textbf{download time} and a $66\%$ inter-region \textbf{traffic} reduction.
+    \end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Bin Packing Problem}
+    \framesubtitle{Formal Statement}
+
+    \vspace{-10pt}
+
+    Given a set of bins $S_1, S_2, \dots$ with the same size $V$ and a list of $n$ items with sizes $a_1, \dots, a_n$ to pack,
+    \begin{equation*}
+        \begin{aligned}
+            \text{minimize } & B = \sum\limits_{i = 1}^{n} y_i \\
+            \text{subject to } & B \geq 1 \\
+            & \sum\limits_{j = 1}^{n}a_jx_{ij} \leq V y_i, \quad \quad \forall i \in \lbrace 1, \dots, n\rbrace \\
+            & \sum_{i = 1}^n x_{ij} = 1 \qquad \qquad x_{ij}, y_i \in \lbrace 0, 1 \rbrace \\
+            %& x_i \in \lbrace 0, 1 \rbrace
+        \end{aligned}
+    \end{equation*}
+    \hspace{20pt} where $y_i = 1$ if bin $S_i$ is used and $x_{ij} = 1$ if item $a_j$ is put into bin $S_i$.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Bin Packing in Geometry}
+    \framesubtitle{1D Bin Packing}
+    
+    \begin{itemize}
+        \item The classic representation of the Bin Packing problem has a straight-forward 2D geometric representation.
+    \end{itemize}
+
+    \vspace{-10pt}
+
+    \begin{figure}
+        \centering
+        \resizebox{0.8\linewidth}{!}{
+        \begin{tikzpicture}
+            \foreach \x in {0,...,7}
+            {
+                \begin{scope}
+                    \pgfmathparse{250*rnd+5}
+                    \edef\tmpi{\pgfmathresult}
+                    \pgfmathparse{210*rnd+45}
+                    \edef\tmpii{\pgfmathresult}
+                    \pgfmathparse{230*rnd+25}
+                    \edef\tmpiii{\pgfmathresult}
+                    \pgfmathparse{0.75*rnd+0.25}
+                    \edef\opac{\pgfmathresult}
+                    \definecolor{MyColor}{RGB}{\tmpi,\tmpii,\tmpiii}    
+                    \pgfmathparse{int(4*rnd) + 1}
+                    \edef\rndheight{\pgfmathresult}
+                    %\draw[fill=MyColor!40] (0,\x*0.5) rectangle (1,0.5*\x + .5) node[pos=.5] (orig-\x) {$a_{\x}$};
+                    \draw[fill=MyColor!40] (\x, 0) rectangle (\x + 1, \rndheight) node[anchor=south] (orig-\x) at (\x + 0.5, \rndheight) {$a_{\x}$}; 
+                \end{scope}
+            }
+            \foreach \y in {0,...,5}
+            {
+                \begin{scope}
+                    \draw (9 + \y, 0) rectangle (10 + \y, 5) node[anchor=south east] (bin-\y) {$S_{\y}$};
+                    %\draw (5 + \y, 0) rectangle (6 + \y, \tmpi);
+                \end{scope}
+            }
+        \end{tikzpicture}
+        }
+        %\caption{Classsic representation of the bin packing problem.}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Solving BP: Greedy Approximation Algorithms}
+    \framesubtitle{First Fit (FF), First Fit Decreasing (FFD)}
+
+    \begin{columns}
+        \begin{column}{.45\textwidth}
+            \textbf{First Fit Algorithm:}
+            \begin{itemize}
+                \item Try to fit each element in the current set of opened bins. If it fits in none, open a new bin.
+                \item Runtime $\mathcal{O}(n \log n)$
+                \item Approximation factor: $1.7$
+            \end{itemize}
+            \textbf{First Fit Decreasing Algorithm:}
+            \begin{itemize}
+                \item Order the elements to sort, and apply First Fit.
+                \item Runtime $\mathcal{O}(n \log n)$
+                \item Approximation factor: $1.222$
+            \end{itemize}
+        \end{column}
+        \begin{column}{.45\textwidth}
+            \begin{algorithm2e}[H]
+                \KwIn{Some Input}
+                \While{$item \gets S.\text{pop}()$}
+                {
+                    \For{$bin \in B$}
+                    {
+                        \If{$\text{fits}(item, bin)$}
+                        {
+                            $\text{put}(item, bin)$\;
+                            \textbf{break}\;
+                        }
+                    }
+                    \Else
+                    {
+                        $\text{put}(item, \text{new}(bin))$\;
+                    }
+                    % If it does not fit in any bin, open new one
+                }
+                \caption{First Fit Algorithm}
+            \end{algorithm2e}
+        \end{column}
+    \end{columns}
+
+    \tiny
+    \begin{description}
+        \item $[1]$ Maxence Delorme, Manuel Iori, Silvano Martello. \textbf{\textit{"Bin-Packing and Cutting Stock Problems: Mathematical Models and Exact Algorithms"}}.  Section 2.3.
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Modern Application: VM Placement}
+
+    \begin{figure}[h!]
+        \centering
+        \resizebox{0.9\linewidth}{!}{
+        \begin{tikzpicture}
+            % Initial Goal Function
+            \node[align=left] at (3, 6) {\textbf{Objective Function:} \\ - Minimize Economical Cost \\ - Minimize Energy Consumption \\ - Maximize Data Locality};
+
+            % Resource Requests
+            \draw[dashed] (2,1.8) rectangle (7, 4);
+            \node[anchor=south] at (4.5, 4) {\textbf{Resource Requests}($RR$)};
+            \node[anchor=north] at (4.5, 1.8) {Online or Offline fashion};
+            % RR1
+            \draw[fill=blue!30] (6.15, 2.5) rectangle (6.85, 3.5) node[pos=.5] {$RR_1$};
+            \draw[<->] (6.15, 2.4) -- (6.85, 2.4) node[anchor=north, pos=.5] {$M$};
+            \draw[<->] (6.05, 2.5) -- (6.05, 3.5) node[anchor=east, pos=.5] {$D$};
+            % RR2
+            \draw[fill=green!30] (5.15, 2.5) rectangle (5.45, 3);
+            \node[anchor=south] at (5.3, 3) {$RR_2$};
+            \draw[<->] (5.15, 2.4) -- (5.45, 2.4) node[anchor=north, pos=.5] {$M$};
+            \draw[<->] (5.05, 2.5) -- (5.05, 3) node[anchor=east, pos=.5] {$D$};
+            % RR3
+            \draw[fill=brown!30] (3.65, 2.5) rectangle (4.35, 3.85) node[pos=.5] {$RR_3$};
+            \draw[<->] (3.65, 2.4) -- (4.35, 2.4) node[anchor=north, pos=.5] {$M$};
+            \draw[<->] (3.55, 2.5) -- (3.55, 3.85) node[anchor=east, pos=.5] {$D$};
+            \node at (2.6, 3) {\textbf{$\dots$}};
+
+
+            % DC
+            \node at (13, 7) {\textbf{Datacenters ($DC$)}};
+
+            % Datacenter 1
+            \draw[fill=gray!10, dashed] (8,0) rectangle (12, 6);
+            \node[anchor=north] at (10, 0) {\textbf{Physical Machines ($PM$)}};
+            \node[anchor=south] at (10, 6) {$DC_1$};
+            \draw[fill=blue!15] (8.15,0.5) rectangle (8.65, 5.5);
+            \node[anchor=north] at (8.4, 0.5) {$PM_1$};
+            \draw[fill=green!15] (8.7,0.5) rectangle (8.95, 5.5);
+            \node[anchor=south] at (8.825, 5.5) {$PM_2$};
+            \draw[fill=yellow!15] (9,0.5) rectangle (9.45, 5.5);
+            \node[anchor=north] at (9.22, 0.5) {$PM_3$};
+            \draw[fill=red!15] (9.5,0.5) rectangle (10.35, 5.5);
+            \node[anchor=south] at (9.925, 5.5) {$PM_4$};
+            \node at (10.85, 3) {\textbf{$\dots$}};
+            \draw[fill=orange!15] (11.35, 0.5) rectangle (11.85, 5.5);
+            \node[anchor=north] at (11.525, 0.5) {$PM_n$};
+            \node at (13, 3) {\textbf{$\dots$}};
+
+            % Datacenter 2
+            \draw[fill=gray!15, dashed] (14,0) rectangle (16, 6);
+            \node[anchor=south] at (15, 6) {$DC_m$};
+            \node at (15, 3) {\textbf{$\dots$}};
+        \end{tikzpicture}
+        }
+    \end{figure}
+
+\end{frame}
+
+
+\section*{Questions \& Observations}
+\sectionframe
+
+\end{document}
