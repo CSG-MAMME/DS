@@ -15,13 +15,14 @@ Comments (to be returned to the author(s))
 1. WHAT, in your opinion, are the most original contributions of this
 paper?
 
-An in-depth literature review of the design, performance, and enhancmenets of the BitTorrent P2P file-sharing protocol.
+The design of Ethereum's blockchain.
 
 2. WHAT, in your opinion, is the significance of the paper?  What
 aspects of the paper are likely to be used by other researchers and/or
 practitioners?
 
-The main significance of the paper is that it encompasses together several (filtered) resources about Bittorrent, providing a great starting point for new researchers trying to enter the field, or established ones looking for quality references.
+The paper presents a novel ground-breaking result.
+It has proven to be one of the major breakthroughs in the last decade.
 
 3. What was the most challenging, but important, thing to understand
 about the paper? Give an example of the concept, what your confusions
@@ -30,18 +31,18 @@ something that was challenging because it was poorly explained, but is
 also not important. Choose something that IS important but that was a
 difficult concept to grasp)
 
-The most important part is being able to distill the important concepts (architecutrally and performance enhancning hints) from the vast amount of information available.
+Why ether and gas are pinnacle in the stability of the system.
 
 4. Please detail any technical errors, uncited related work, and/or ways
 in which the technical material could be improved.
 
-Include a TL-DR section to grasp a general idea of the conclusions they reach.
+It is a white paper so not a lot of technical detail is required, however it may be too descriptive at some points (maybe too much dissemination).
 
 5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
 
 6. Please highlight the most important insights that have you have learnt from the paper?
 
-The paper provides a great introduction to BitTorrent and more generally peer-to-peer communication protocols, and is very explicative, educative, and well written.
+The functioning of Ethereum and it's main differences with Bitcoin (and why an alternative was necessary).
 
 7. Do you think this paper should be included in next year's DS course?
 
@@ -60,4 +61,14 @@ These limitations act as driving forces for the development of Ethereum.
 
 The intent of Ethereum is to improve the scripting language to allow developers to create arbitrary consensus-based applications.
 Ethereum builds a blockchain with a Turing-complete programming language.
+It's building blocks are accounts (external controlled by private keys, and contracts controlled by their contract code) and ether is the internal crypto-fuel.
+In order to prevent computational blowup, Ethereum transactions must include an approximate amount of computational steps and the amount they are willing to pay a miner to perform then.
+
+Code is programmed in a DSL and executed in an Ethereum Virtual Machine.
+It is a stack-based language similar in essence to BTCs but with Turing completeness.
+
+Lastly, the author presents some possible applications in the financial domain, and other decentralized applications (and DAOs).
+
+As for the mining process Ethereum's goal is to mitigate the impact of: specialized hardware and mining pools.
+However, the author does not provide details of the chosen mining methodology (although it is based in PoW as well).
 ------------------------------------------------------------------------
