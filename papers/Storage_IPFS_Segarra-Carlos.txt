@@ -1,0 +1,74 @@
+--------------------------------------------------------------------------
+
+Name and email address: 
+    Carlos Segarra
+    carlos@carlossegarra.com
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: A next generation smart contract & decentralized application platform
+Author(s): Vitalik Buterin
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+The design of Ethereum's blockchain.
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+The paper presents a novel ground-breaking result.
+It has proven to be one of the major breakthroughs in the last decade.
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+Why ether and gas are pinnacle in the stability of the system.
+
+4. Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+
+It is a white paper so not a lot of technical detail is required, however it may be too descriptive at some points (maybe too much dissemination).
+
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+The functioning of Ethereum and it's main differences with Bitcoin (and why an alternative was necessary).
+
+7. Do you think this paper should be included in next year's DS course?
+
+Yes
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+This paper presents the founational concepts behind the Ethereum blockchain together with a description of its building blocks.
+The essential difference between Ethereum and Bitcoin is that the former's blockchain aims to provide a blockchain with a built-in fully fledged Turing-complete programming language to create a sort of contracts denoted "smart contracts".
+
+Firstly, the author introduces Bitcoin and it's blockchain: depicts it's functionality, explains Merkle trees, and covers some of the major applications built atop Bitcoin.
+The summary finishes talking about BTC's scripting language and its main constraints: lack of Turing completeness, UTXO undivisibility, lack of different states, and non-awareness of the Blockchain.
+These limitations act as driving forces for the development of Ethereum.
+
+The intent of Ethereum is to improve the scripting language to allow developers to create arbitrary consensus-based applications.
+Ethereum builds a blockchain with a Turing-complete programming language.
+It's building blocks are accounts (external controlled by private keys, and contracts controlled by their contract code) and ether is the internal crypto-fuel.
+In order to prevent computational blowup, Ethereum transactions must include an approximate amount of computational steps and the amount they are willing to pay a miner to perform then.
+
+Code is programmed in a DSL and executed in an Ethereum Virtual Machine.
+It is a stack-based language similar in essence to BTCs but with Turing completeness.
+
+Lastly, the author presents some possible applications in the financial domain, and other decentralized applications (and DAOs).
+
+As for the mining process Ethereum's goal is to mitigate the impact of: specialized hardware and mining pools.
+However, the author does not provide details of the chosen mining methodology (although it is based in PoW as well).
+------------------------------------------------------------------------
