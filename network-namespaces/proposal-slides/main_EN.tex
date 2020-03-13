@@ -43,8 +43,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % title and subtitle of the presentation (the latter is optional)
-\newcommand{\mainTitle}{Netowk Namespaces}
-\newcommand{\secondTitle}{Transparent Checkpoint/Restore of Distributed Networks}
+\newcommand{\mainTitle}{Checkpoint Restore of Container Meshes}
+\newcommand{\secondTitle}{Design, Implementation, and Evaluation}
 \subtitle{Decentralized Systems - Project Proposal} % leave empty if no subtitle
 \title[\mainTitle] % leave empty for no title in footer
     {\Large \mainTitle \\ \normalsize \secondTitle}
@@ -52,8 +52,8 @@
 %\subtitle{Master in Research in Informatics - MIRI}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % date of the presentation (leave empty for no date, default is today)
-\date[March 3, 2020] % leave empty for no date in footer
-    {Tuesday March 3, 2020}
+\date[March 13, 2020] % leave empty for no date in footer
+    {Friday March 13, 2020}
     %{\datedayname, \today}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % authors and their affiliations (the latter is optional)
@@ -89,48 +89,31 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{General Information}
+    \frametitle{Problem Statement and Motivation}
+    \framesubtitle{Outline of the Project}
 
+    \vspace{-25pt}
+
+    \textbf{\textcolor{blue}{Problem Motivation:}}
     \begin{itemize}
-        \item \textbf{Full Title:} "Bittorrent traffic optimization in Wireless Mesh Networks with ALTO service" $[1]$
-        \item \textbf{Authors:} Francesco Paolo d'Elia, Giovanni Di Stasi, Stefano Avallone, and Roberto Canonico
-        \item \textbf{Published At:} \href{https://ieeexplore.ieee.org/xpl/conhome/5976314/proceeding}{2011 IEEE International Symposium on a World of Wireless, Mobile and Multimedia Networks}
-        \item \textbf{Publishing Date:} 20-24 June 2011
-        \item \textbf{DOI:} \href{https://doi.org/10.1109/WoWMoM.2011.5986177}{10.1109/WoWMoM.2011.5986177}
+        \small
+        \item Containers have become the go-to alternative for sandboxing and deploying several distributed applications. 
+        \item Orchestrators such as \href{https://kubernetes.io/}{Kubernetes} or \href{https://docs.docker.com/engine/swarm/}{Docker Swarm} ease these deployments and the network configuration, making it transparent to the user.
+        \item \href{https://en.wikipedia.org/wiki/Application_checkpointing}{Checkpointing} provides systems with fault-tolerance and state consistency enabling rollback and restore from previous stable versions.
+            Live migration consists in transparently relocating running services for improved resource-management or increased QoS.
+        \item Support for checkpointing (Docker) containers is very limited (\href{https://github.com/docker/cli/blob/master/experimental/checkpoint-restore.md}{[1]}, \href{https://criu.org/Docker}{[2]}) and only in experimental mode. 
     \end{itemize}
 
-
     \small
-    \begin{description}
-        \item $[1]$ F. P. D'Elia, G. Di Stasi, S. Avallone and R. Canonico, "Bittorrent traffic optimization in Wireless Mesh Networks with ALTO service," 2011 IEEE International Symposium on a World of Wireless, Mobile and Multimedia Networks, Lucca, 2011, pp. 1-6
-    \end{description}
- 
+    \begin{alertblock}{Main Goal}
+        Design, implementation, and evaluation of a distributed checkpoint/restore algorithm for a container mesh.
+    \end{alertblock}
 
 \end{frame}
 
 \begin{frame}
     \frametitle{TL-DR}
-    \framesubtitle{A Ten Thousand Feet View}
-
-    \vspace{-25pt}
-
-    \begin{alertblock}{Main Contribution}
-        The paper presents a \textbf{hierarchichal peer organization} to optimize Bittorrent's bandwidth usage in wireless mesh networks.
-    \end{alertblock}
-
-    \begin{block}{Techniques}
-        The authors base on the \textbf{Application Layer Traffic Optimization Service} which provides the peers with knowledge about the underlying network.
-    \end{block}
-
-    \begin{alertblock}{Evaluation Results}
-        They report a $27\%$ time reduction in \textbf{download time} and a $66\%$ inter-region \textbf{traffic} reduction.
-    \end{alertblock}
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Background Concepts}
-    \framesubtitle{Bittorrent \& ALTO}
+    \framesubtitle{Outline of the Project}
 
     \begin{columns}
         \begin{column}{.55\textwidth}
