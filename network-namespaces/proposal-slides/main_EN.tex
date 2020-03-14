@@ -4,7 +4,7 @@
 %% my own flavour to it. Kudos to <vincent.labatut@univ-avignon.fr>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup Beamer
-\documentclass[10pt,    % default is 11pt, use 10pt for more compact slides
+\documentclass[9pt,    % default is 11pt, use 10pt for more compact slides
 %    handout,            % collapse all overlays (=animations) and video-invert console text
     english,            % presentation language (theme supports only french & english)
     xcolor=table,       % colors in the tables
@@ -89,76 +89,115 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Problem Statement and Motivation}
-    \framesubtitle{Outline of the Project}
+    \frametitle{Project Outline}
+    \framesubtitle{Motivation \& Problem Statement}
 
-    \vspace{-25pt}
 
-    \textbf{\textcolor{blue}{Problem Motivation:}}
+    \textbf{\textcolor{blue}{Problem Motivation*:}}
     \begin{itemize}
-        \small
-        \item Containers have become the go-to alternative for sandboxing and deploying several distributed applications. 
-        \item Orchestrators such as \href{https://kubernetes.io/}{Kubernetes} or \href{https://docs.docker.com/engine/swarm/}{Docker Swarm} ease these deployments and the network configuration, making it transparent to the user.
-        \item \href{https://en.wikipedia.org/wiki/Application_checkpointing}{Checkpointing} provides systems with fault-tolerance and state consistency enabling rollback and restore from previous stable versions.
-            Live migration consists in transparently relocating running services for improved resource-management or increased QoS.
+        \item \textbf{\textcolor{blue}{Containers}} have become the go-to alternative for sandboxing and deploying distributed applications. 
+        \item \textbf{\textcolor{blue}{Orchestrators}} such as \href{https://kubernetes.io/}{Kubernetes} or \href{https://docs.docker.com/engine/swarm/}{Docker Swarm} ease these deployments and the network configuration, making it transparent to the user.
+        \item \href{https://en.wikipedia.org/wiki/Application_checkpointing}{Checkpointing} provides systems with \textbf{\textcolor{blue}{fault-tolerance}} and \textbf{\textcolor{blue}{state consistency}} enabling rollback and restore from previous stable versions.
+        \item \textbf{\textcolor{blue}{Live migration}} consists in transparently relocating running services for improved resource-management and increased QoS.
         \item Support for checkpointing (Docker) containers is very limited (\href{https://github.com/docker/cli/blob/master/experimental/checkpoint-restore.md}{[1]}, \href{https://criu.org/Docker}{[2]}) and only in experimental mode. 
     \end{itemize}
 
+    \vspace{10pt}
     \small
+    \begin{description}
+        \item *This work is complementary, and builds on, my MSc Thesis under the supervision of Jordi Guitart.
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Project Outline}
+    \framesubtitle{Goals, Experiments, \& Tools}
+
+    \vspace{-25pt}
     \begin{alertblock}{Main Goal}
         Design, implementation, and evaluation of a distributed checkpoint/restore algorithm for a container mesh.
     \end{alertblock}
 
-\end{frame}
-
-\begin{frame}
-    \frametitle{TL-DR}
-    \framesubtitle{Outline of the Project}
-
-    \begin{columns}
-        \begin{column}{.55\textwidth}
-            \textbf{Tracker-Based Bittorrent Protocol:}
-            \begin{itemize}
-                \item \textbf{Bittorrent} is a peer-to-peer communication protocol for file sharing.
-                \item A \textbf{Bittorrent} tracker is a server that assists in the communication between peers.
-                \item It keeps track of where file copies reside.
-            \end{itemize}
-            \textbf{The ALTO Service Architecture:}
-            \begin{itemize}
-                \item The \textbf{\href{https://tools.ietf.org/html/rfc7285}{Application Layer Traffic Optimization}} services provide network information with the goal of modifying network resources consumption.
-            \end{itemize}
-        \end{column}
-        \hfill
-        \begin{column}{.35\textwidth}
-            \begin{figure}[h!]
-                \centering
-                \includegraphics[width=\textwidth]{./images/bit-torrent.png}
-                \caption{Bittorrent Tracker Protocol Architecture}
-            \end{figure}
-        \end{column}
-    \end{columns}
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Proposed Architecture}
-
-    \vspace{-15pt}
-    \begin{columns}
-        \begin{column}{.35\textwidth}
-            \textbf{Exectuion Flow:}
+    \begin{columns}[t]
+        \begin{column}{.45\textwidth}
+            \textbf{\textcolor{blue}{Milestones:}}
             \begin{enumerate}
-                \item Peer node queries tracker for list of peers.
-                \item Tracker forwards request to ALTO Server.
-                \item Server delegates to respective WMN Agent.
-                \item Server aggregates responses and returns sorted list to Tracker.
-                \item Tracker forwards response to asking peer.
+                \item Deployment of a distributed container mesh.
+                \item Design \& Implementation of a (distributed) DNS.
+                \item Implementation of a (set of) distributed snapshot algorithm(s).
+                \item Transparent network restore.
             \end{enumerate}
+        \end{column} \hfill
+        \begin{column}{.45\textwidth}
+            \textbf{\textcolor{blue}{Tools:}}
+            \begin{itemize}
+                \item \href{https://github.com/opencontainers/runc}{\texttt{runc}} and \href{https://containerd.io/}{\texttt{containerd}} as container client and runtime.
+                \item \href{https://criu.org/Main_Page}{Checkpoint Restore In Userspace (\texttt{criu})} for local checkpointing of containers.
+                \item The implementation will be done in \texttt{C} to leverage \href{https://criu.org/C_API}{\texttt{libcriu}}, and \href{http://www.libssh.org/}{\texttt{libssh}} for the network programming.
+            \end{itemize}
         \end{column}
-        \begin{column}{.70\textwidth}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Milestones}
+    \framesubtitle{A Detailed Breakdown}
+    
+    \vspace{-15pt}
+
+        \begin{enumerate}
+            \item Deployment of a distributed container mesh.
+            \begin{itemize}
+                \item \texttt{runc} and \texttt{containerd} are not as integrated with S.o.A orchestrators, so I will implement an \textit{ad-hoc}, simple, deployment script.
+                \item I will stick to lower-level containerization tools due to better support of checkpoint-restore.
+            \end{itemize}
+            \item Design \& Implementation of a (distributed) DNS.
+            \begin{itemize}
+                \item It will keep track of the static IPs assigned to each container, and the dependencies (connections) among them.
+                \item The DNS will handle re-connections.
+            \end{itemize}
+            \item Implementation of a (set of) distributed snapshot algorithms.
+            \begin{itemize}
+                \item Initially I will implement the well-known \href{https://en.wikipedia.org/wiki/Chandy-Lamport_algorithm}{Chandy-Lamport algorithm}.
+                \item If time allows I might explore other algorithms: 
+            \end{itemize}
+            \item Transparent network restore.
+            \begin{itemize}
+                \item Different types of mesh restore will be tested. Namely: whole restore (all containers go down and are restored, maybe elsewhere), and single-container restore.
+                \item The latter simulates the situation in which a node temporarily becomes unavailable.
+            \end{itemize}
+        \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Planned Experiments}
+    
+    \begin{columns}[t]
+        \begin{column}{.4\textwidth}
+            \begin{enumerate}
+                \item[\textbf{E1}] \textbf{Microbenchmarks:}
+                \begin{itemize}
+                    \item DNS Evaluation: scalability \& liveness.
+                    \item Distributed Checkpoint Evaluation: elapsed time.
+                \end{itemize}
+                \item[\textbf{E2}] \textbf{Macrobenchmarks:}
+                \begin{itemize}
+                    \item Single container fault+restore: single and following pattern.
+                    \item Whole mesh checkpoint-restore.
+                \end{itemize}
+                \item[\textbf{E3}] \textbf{Comparison against SoA:}
+                \begin{itemize}
+                    \item Repeat E2 with Virtual Machines.
+                    \item Repeat E2 with Docker Swarm (w/out CR).
+                \end{itemize}
+            \end{enumerate}
+        \end{column} \hfill
+        \begin{column}{.6\textwidth}
             \begin{figure}[h!]
                 \centering
-                \includegraphics[width=1.05\textwidth]{./images/architecture.png}
+                \includegraphics[width=\textwidth]{./local_benchmark.pdf}
+                \caption{Local Checkpoint-Restore of single \texttt{runc} containers with Criu. Each container runs a Redis DB with an increasing number of keys. I report average and stdev  of 1000 runs. (Plot from my thesis)}
             \end{figure}
         \end{column}
     \end{columns}
@@ -166,20 +205,28 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Open Questions}
+    \frametitle{Tentative Roadmap}
 
-    \begin{enumerate}
-        \item What's your opinion about the evaluation section?
-        \begin{itemize}
-            \item What experiments do they lay out?
-            \item What do they show?
-            \item What does that prove?
-            \item What is the statistical relevance of the results?
-            \item Who they compare against?
-        \end{itemize}
-        \item Are Tracker-Based Bittorent Protocols used anymore?
-        \item What's your opinion on the design choice for the ALTO Server?
-    \end{enumerate}
+    \begin{table}[h!]
+        \rowcolors{1}{blue!20}{}
+        \begin{tabular}{L{1.5cm}L{1.5cm}L{10cm}}
+            \hline
+            \rowcolor{blue!40}
+            \textbf{Weeks} & \textbf{Milestone} & \textbf{Planned Work} \\[3pt]
+            \hline \hline
+            1-2 & M1 \& M2 & First design and implementation work. Proof of concept. \\[3pt]
+            3-4-5 & M2 \& M3 & Strengthen the design and finalize all implementation. \\[3pt]  
+            6-7 & E1 \& E2 \& E3 & Design of the different experiments and evaluation. \\[3pt] 
+            8 & P1 & 05/05 Group Work Intermediate Presentation \\[3pt] 
+            9 & P & Preparatio of different dissemination materials: plots and poster. \\[3pt] 
+            10 & P2 & 22/05 Work Presentation: Poster Session \\[3pt] 
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{center}
+        \textbf{\textcolor{blue}{Suggestions \& Recommendations Welcome!}} \\ \href{mailto:carlos.segarra@estudiant.upc.edu}{carlos.segarra@estudiant.upc.edu}
+    \end{center}
 
 \end{frame}
 
