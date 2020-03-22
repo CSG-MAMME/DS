@@ -1,0 +1,73 @@
+--------------------------------------------------------------------------
+
+Name and email address: 
+    Carlos Segarra
+    carlos@carlossegarra.com
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: "Spotify - Large Scale, Low Latency, P2P Music-on-Demand Streaming"
+Author(s): Gunnar Kreitz, Frederik Niemelä
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+The evaluation section is very good, in particular in the way they can decouple the effect of each of the different design choices they make.
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+The paper itself is of relevant significance as it covers the design of a very sucesful, long-standing, platform.
+However, the architecture part is slightly deceiving as the authors fail to provide any interesting details (due to it's proprietary nature).
+On the other hand, the evaluation section is very insightful and could be reused by other researchers when designing what features to include in the design of their novel P2P system.
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+Graphs are very packed with information and can be highly challenging to understand.
+To this extent, I believe they are the key point to understand in order to have a good understanding of the system.
+
+4. Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+It is always tricky in situations when proprietary software is a key part in a system.
+Maybe the phrasing of the title is a bit deceiving, as one could expect more insights on the architecture.
+However, the evaluation part is remarkable in itself.
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+The different design choices in Spotify's system (at a disseminative level) and how these affect the performance of a real large-scale system.
+
+7. Do you think this paper should be included in next year's DS course?
+
+Yes (maybe).
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+This paper introduces the architecture behind Spotify, a P2P music-on-demand streaming platform based on a proprietary client and protocol.
+The main focus of Spotify is in low playback latency.
+
+The Spotify protocol is proprietary so the insights the authors provide are rather scarce.
+An interesting point is that they use TCP rather than UDP (which is more common in streaming applications).
+They also explain how they deal with random access playbacks: the user requests to the server the first 15s while the track is downloaded from the P2P mesh.
+Further problems like caching, or dealing with latency are also explained, but on a very high level manner, lacking a lot of technical detail.
+
+As for the P2P protocol, the goal is to keep it as simple as possible.
+Relying on the large track-caches each client has, the authors leverage an unstructured mesh with no additional routing.
+To locate peers from whom to download a track, Spotify does not use a DHT to reduce lookup times, rather it uses a similar tracker protocol than the one in BitTorrent.
+In addition to the tracker-based protocol, clients also send search requests to the overlay similarly to Gnutella.
+
+The evaluation section (contrary to the architecture one) provides a lot of insightful detail and could be of great reference to other authors (albeit no containing absolute values).
+------------------------------------------------------------------------

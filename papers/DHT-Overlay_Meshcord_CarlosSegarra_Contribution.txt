@@ -1,0 +1,16 @@
+Q: Do you think the proposal is good or not? Why? How about other techniques, e.g. flooding, to find reources/content in a WMN?
+Unfortunately, the authors only compare against other DHT-based (Chord modifications, in fact) resource sharing techniques, so it's difficult to make an educated guess.
+However, I would say that the proposed technique would have less impact on the bandwidth and scales to more nodes.
+
+Q: About the computational cost needed to use location awareness and cross layering in key-based routing?
+In my opinion location awareness comes almost for granted with the infrastructure.
+However, it is true that, without further details, it is complicated to know the computational cost of the cross-layering.
+According to the authors, a node sniffs packets that it intercepts, but it does not specify how "curious" a node has to be in order for this technique to achieve noticeable results.
+It is possible that the computational overhead introduced by this cross-layering turned out to be not-desirable for nodes in the mesh.
+
+Q: Do you think the approach can be generalized?
+I am not sure was that the asker mean with generalized, but I think the concepts could be reused in other protocols applied to wireless mesh networks.
+
+Q: How would you improve the presented work?
+The authors could provide further details on the computational cost of the additional techniques they suggest.
+Further, they could compare against other resource-sharing techniques in WMN non DHT-based for instance.
