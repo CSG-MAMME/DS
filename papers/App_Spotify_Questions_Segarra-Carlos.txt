@@ -1,0 +1,58 @@
+------------------------------------------------------------------------------
+Name: Carlos Segarra
+Mail: carlos@carlossegarra.com
+Date: 24/03/2020
+------------------------------------------------------------------------------
+
+1. Explain the design of Spotify. Comparint the design of Spotify with BitTorrent, which similarities can you identify?
+
+Spotify combines a (two in fact) centralized servers with a peer-to-peer network to offer a large library of music for streaming on-demand for their users.
+Spotify's greatest trait is it's low playback time when compared to other architecutres/systems.
+In general, the protocol relies on the peers to distribute the songs in a P2P manner but leverages the server (with whom it always keeps a TCP connection open) for latency-critical operations such as random-access to a track, in which case the server sends the first 15 seconds of it, so that the mesh has time to serve the request.
+
+As stated by the authors, on-demand streaming has a lot in common with file-sharing applications, hence the similarities with BitTorrent and Gnutella.
+In particular, and similarly to BitTorrent, the network relies on a tracker which maintains a mapping from tracks to peers who have it.
+However, peers store tracks completely and not in chunks as in BitTorrent.
+Both systems also limit the number of neighbours a client is connected to.
+
+2. Explain the characteristics of Spotify which make it to a system P2P. What type of overlay is used? When you listen to a song in Spotify, from what source it can come from?
+
+The system uses two independent unstructured overlays, aided by trackers for peer discovery.
+When listening to a song, the full origin of it can depend on different factors:
+- If the song played was the next in queue and it played right after the previous finished, or because the user pressed the next button, the next song will have already been prefetched from the P2P network.
+- If the song played has been accessed through random access, the first 15 seconds are queried to the central server, and then the rest obtained from the network.
+
+3. Why does Spotify use TCP instead of UDP?
+
+The authors enumerate a variety of arguments for choosing TCP over UDP. Namely:
++ Reliable transport simplifies protocol design.
++ TCP's congestion algorithms and bandwidth sharing models.
++ Reliable transport makes it easier to distribute files.
+On a more personal note I might add the two following:
++ Given that the data being shared is not very big (compared to video streaming for instance), the authors can afford to use TCP over UDP.
++ However, they do indeed trick the system into behaving more UDP-like in performance critical occasions by using already-open TCP sessions and bypassing the TCP Congestion Algorithms. (And by keeping a connection open to the server always).
+
+4. What is the "caching" mechanism in Spotify used for?
+
+The caching mechanism is used to store the most-recently listened songs for faster access.
+In addition, it is also used in the song-sharing protocol, as peers in the network only offer songs that they have fully downloaded and in-cache.
+As songs are rather small, peers tend to have a big amount of songs downloaded which eases the P2P distribution.
+
+5. Which reasons expose the authors to justify not using a DHT?
+
+The authors expose three different reasons for which not to use a DHT:
++ Downloading a new track, contrary to in file-sharing applications, is a very frequent operation so lookup times need to be as fast as possible, hence DHTs are discarded (they would rather ask the centralized server or tracker).
++ Avoiding a DHT makes the protocol more simple and easier to maintain.
++ Avoiding a DHT keeps the overall overhead down.
+
+6. How is the tracker used in Spotify?
+
+The tracker (similarly to BitTorrent's one) maintains a list of peers who have a specific track fully downloaded in the cache.
+A client would connect to it asking for online peers who can serve it.
+It also helps with the bootstrapping of peers, as when a new node connects it will either contact or be contacted from the tracker, putting it in contact with other peers.
+
+7. Spotify nowadays no longer uses the network P2P. Which reasons may have contributed to no longer using the P2P netowrk?
+
+I would assume that the company has nowadays reached a dimension and scale that they can have their own "P2P" system based on geo-located datacenters.
+Given the amount of content the company now offers, maintaining such a large network would be an added cost to the company.
+Further, given the restrictions and how monitored they must be by royalties and the music industry, being able to say that they control the whole infrastructure must be an easier-to-swallow pill for the music industry.
