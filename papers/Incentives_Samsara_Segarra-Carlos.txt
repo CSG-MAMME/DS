@@ -1,0 +1,69 @@
+--------------------------------------------------------------------------
+
+Name and email address: 
+    Carlos Segarra
+    carlos@carlossegarra.com
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: "Samsara: Honor AMong Thieves in Peer-to-Peer Storage"
+Author(s): Landon P. Cox, Brian D. Noble
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+A scheme to ensure fairness in peer-to-peer storage systems without any additional constraints on the mesh.
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+As stated by the authors, even though their implementation targets Pastiche, it can be applied to any other peer-to-peer storage system.
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+The most important concept to understand are storage claims, i.e. how they create "fake" symmetry in order to ensure fairness.
+
+4. Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+The paper presents a very novel, interesting, and smart policy for ensuring fairnes in storage p2p system, and also provide a very detailed evaluation of it.
+
+7. Do you think this paper should be included in next year's DS course?
+
+Yes.
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+The paper is motivated by the fact that p2p storage systems depend on (rely on) individual nodes conumint storage space in proportion to their contribution, otherwise the system collapses.
+Alternatives in the SoA require some sort of additional property contrary to the p2p essence (trusted third parties, centralized elements, or symmetry).
+The authors present Samsara, an infrastructure to enforce fairness in such systems without the additional constraints.
+Their solution bases on creating symmetry through the introduction of "storage claims" futures that can be later exchanged by true data storage.
+
+In order to reduce storage overhead, a node can forward storage claims to other nodes with higher available memory.
+However, forwarding node is still responsible of the claims he has forwarded, so if the other node acts maliciously they would be penalized.
+
+Samsara's design goal is to ensure that nodes consume no more resources than they contribute.
+To enforce equal exchange, nodes are only probabilistically punished if a query to them fails, however, cheating nodes will eventually lose data.
+Queries to prove that you still store data can be answered by simple hashes rather than proof of the full objects.
+Also, a grace-period to answer queries is established so unlucky nodes (which experience failures) are not penalized.
+To balance this grace-period with protection against smart attacks, the authors present a probabilistic method for dropping object replicas as queries fail.
+One big design consideration they make is that they protect mostly against greedy nodes rather than just malicious ones.
+
+After the design and implementation section, the authors go on to develop a very detailed benchmark of the system, both from a micro and macro benchmark perspective.
+It is specially interesting that they compare themselves against `scp` with comparable results, which I think is surprising.
+------------------------------------------------------------------------
