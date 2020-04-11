@@ -1,0 +1,71 @@
+--------------------------------------------------------------------------
+
+Name and email address: 
+    Carlos Segarra
+    carlos@carlossegarra.com
+
+---------------------------------------------------------------------------
+PAPER #:
+Title of the Paper: "Improving Efficiency and Fairness in P2P Systems with Effort-Based Incentives"
+Author(s): Rameez Rahman, Michel Meulpolder, David Hales, Johan Powelse, and Henk Sips
+------------------------------------------------------------------------
+
+Comments (to be returned to the author(s))
+
+1. WHAT, in your opinion, are the most original contributions of this
+paper?
+
+The most original contribution of the paper is an alternative way to measure contribution in an incentive-based p2p system.
+In particular, the authors avocate for "Payment according to effort and sacrifice" rather than absolute values (which are biased by unbalancements among nodes).
+
+2. WHAT, in your opinion, is the significance of the paper?  What
+aspects of the paper are likely to be used by other researchers and/or
+practitioners?
+
+The paper presents a theoretical approach, and illustrates it in a couple of scenarios.
+However, given the novelty of the proposal, it could very well be applied to any other p2p setting.
+
+3. What was the most challenging, but important, thing to understand
+about the paper? Give an example of the concept, what your confusions
+were/are, and why it is important. (In other words, don't choose
+something that was challenging because it was poorly explained, but is
+also not important. Choose something that IS important but that was a
+difficult concept to grasp)
+
+It is clear that the important thing to grasp is the contributtion of Participatory Economics to P2P systems.
+However, it is also important to understand the theoretical background of the current principles in incentive-based systems as they motivate the introduction of Parecon concepts.
+
+4. Please detail any technical errors, uncited related work, and/or ways
+in which the technical material could be improved.
+
+5. Any additional comments for the authors (e.g., how might the paper be further improved beyond 1--4 above?).
+
+6. Please highlight the most important insights that have you have learnt from the paper?
+
+Not only a new method to incentivize fairness in p2p systems, but also a detailed look on how traditional p2p systems incentivize nodes from a more economical perspective.
+
+7. Do you think this paper should be included in next year's DS course?
+
+Yes.
+
+------------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+This paper presents an alternative to volume-based incentives in P2P systems.
+In particular, they introduce the prinicples from Participatory Economics to decentralized systems.
+They do so by measuring contribution effort (relative to a node's capacity) rather than absolute volume.
+Their goal is to maximize social welfare as opposed to welfare of the few.
+
+Traditional incentive-based peer to peer systems build on the principles of:
+- More cooperation and less selfishness,
+- More efficiency and less wastefulness
+- More equity and less unfairness
+However, most of these principles favor peers with absolute larger contributions (maybe due to absolute faster internet connections, or computing power).
+The authors of the paper introduce a novel principle from the Parecon scheme: "Payment according to effort and sacrifice".
+
+Lastly, the authors implement their effort-based incentive policy in two different scenarios: BitTorrent, and a Credit Based Enforcement Scheme.
+In BitTorrent, results show that, if the distribution between fast and slow peers is not heavily skewed, fast peers see very little slowdown when compared to the raw contribution scheme whereas slow peers perceive a great speedup and overall greater resource utilization.
+In the credit based enforcement scheme, the new effort-based policy proved more efficient for both fast and slow peers.
+This is due to an overall increase in performance as slower peers are able to increase their throughput.
+------------------------------------------------------------------------
