@@ -1,0 +1,64 @@
+-----------------------------------------------------------------------
+Summary
+Please summarize the paper in your own words
+
+This paper presents a generic protocol, T-Man, for constructing large classes of node topologies with the help of a ranking function.
+
+T-MAN:
+Generic Protocol to manage topologies.
+    - It uses a ranking function.
+    - Each node can apply it to order a subset of its neighbors.
+    - Uses only gossip messages.
+
+TOPOLOGY MANAGEMENT PROBLEM:
+We have:
+    - Set of nodes connected through a routed network.
+        - Each node has an address 'c'
+        - Each node has a set of node descriptors (node address, node profile) - Partial view
+        - These partial vies form the overlay network topology.
+    - Topology construcion problem:
+        - Define a ranking function R such that it orders the neichbours in a "good way" such that the overlay resembles the target topology.
+    - Challenges:
+        - Nodes come and go (churn)
+    - Examples: 
+        - Ring: rank <-> distance
+        - Binary Tree
+
+GOSSIP PROTOCOLS:
+
+THE T-MAN PROTOCOL:
+Concurrently (two threads per node, one asking, one responding):
+    (Include algorithm)
+    - Each iteration, exchange your view with your top-ranked peer.
+    - Merge both views
+    - And take the best 'c' from the union
+    - Additionally, this exchange incorporates a "salt" which is a random view provided by a peer sampling service 
+        - It ensures that the network remains connected with very high probability.
+        - This saltalso includes long-range links that improve convergence:
+    (Include example figure in page 5)
+    - Optimizations:
+        - Only one connection per cycle
+        - Pre-sort peers
+
+SIMULATION EXPERIMENTS:
+    - Simulations produced using PeerSim.
+    - Big network sizes.
+    - Examine three distance based ranking functions: linear, binary trees, and torus.
+    - Views are initialized at random and they use the Newcast protocol for peer sampling.
+    - Results:
+        - Note the scale, logarithmic but hard to tell.
+        - There are remainders that fail to converge (outliers)
+        - Suprisingly few cycles for so many nodes.
+
+WHAT HAPPENS WITH CHURN?:
+    - Network churn happens when nodes are constantly leaving and joining the network.
+    - Modification to the protocol: remove the oldest descriptors => less "dead links" at each iteration.
+    - Experiments:
+        - Each point is an experiment that has converged (300 cycles) and report the outlier nodes.
+        - Higher churn => Less quality of the views
+        - They change the healing factor (amount of nodes they remove)
+
+APPLICATIONS:
+    - Clustering & Sorting: Experiments artificial as node descriptors are uniform. In general distributions are sparse and clustered (worse performance of distance-based ranking functions). The authors introduce a direction-based sorting to overcome clustering.
+    - DHT: XOR based distance
+------------------------------------------------------------------------

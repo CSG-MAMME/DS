@@ -33,6 +33,7 @@
 % External Packages
 \usepackage{datenumber}
 \usepackage{varwidth}
+%\usepackage[ruled]{algorithm2e}
 
 % Math Mode
 %\usepackage{algorithm}
@@ -45,17 +46,17 @@
 % title and subtitle of the presentation (the latter is optional)
 \subtitle{Decentralized Systems} % leave empty if no subtitle
 \title[Decentralized Systems] % leave empty for no title in footer
-    {\normalsize Bittorrent Traffic Optimization \\ \Large Bittorrent traffic optimization in \\ \Large Wireless Mesh Networks with ALTO Service }
+    {\normalsize Gossip Protocols \\ \Large \textsc{T-Man:} Gossip-based \\ \Large Overlay Topology Management}
 \subtitle{Master in Research in Informatics - MIRI}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % date of the presentation (leave empty for no date, default is today)
-\date[March 3, 2020] % leave empty for no date in footer
-    {Tuesday March 3, 2020}
+\date[April 24th, 2020] % leave empty for no date in footer
+    {Friday April 24th, 2020}
     %{\datedayname, \today}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % authors and their affiliations (the latter is optional)
 \author[] % leave empty for no author in footer
-{F. Paolo d'Elia, G. Di Stasi, S. Avallone, R. Canonico \\\small \textit{Presented by} Carlos Segarra - \texttt{carlos.segarra@estudiant.upc.edu}}
+{M. Jelasity, and O. Babaoglu \\\small \textit{Presented by} Carlos Segarra - \texttt{carlos.segarra@estudiant.upc.edu}}
 %{\inst{1} Computer Science Lab, Avignon University -- LIA EA 4128 \texttt{\{firstname.lastname\}@univ-avignon.fr}
 %\and \inst{2} Institute of Disruptive Innovation, University of Excellence \texttt{\{firstname.lastname\}@univ-excell.fr}
 %}
@@ -89,17 +90,17 @@
     \frametitle{General Information}
 
     \begin{itemize}
-        \item \textbf{Full Title:} "Bittorrent traffic optimization in Wireless Mesh Networks with ALTO service" $[1]$
-        \item \textbf{Authors:} Francesco Paolo d'Elia, Giovanni Di Stasi, Stefano Avallone, and Roberto Canonico
-        \item \textbf{Published At:} \href{https://ieeexplore.ieee.org/xpl/conhome/5976314/proceeding}{2011 IEEE International Symposium on a World of Wireless, Mobile and Multimedia Networks}
-        \item \textbf{Publishing Date:} 20-24 June 2011
+        \item \textbf{Full Title:} "\textsc{T-Man:} Gossip-based Overlay Topology Management" $[1]$
+        \item \textbf{Authors:} M\'ark Jelasity and Ozalp Babaoglu
+        \item \textbf{Published At:} International Workshop on Engineering Self-Organising Applications
+ - ESOA 2005
         \item \textbf{DOI:} \href{https://doi.org/10.1109/WoWMoM.2011.5986177}{10.1109/WoWMoM.2011.5986177}
     \end{itemize}
 
 
     \small
     \begin{description}
-        \item $[1]$ F. P. D'Elia, G. Di Stasi, S. Avallone and R. Canonico, "Bittorrent traffic optimization in Wireless Mesh Networks with ALTO service," 2011 IEEE International Symposium on a World of Wireless, Mobile and Multimedia Networks, Lucca, 2011, pp. 1-6
+        \item $[1]$ Jelasity, Márk and Babaoglu, Ozalp. (2006). T-Man: Gossip-Based Overlay Topology Management. 3910. 1-15. 
     \end{description}
  
 
@@ -112,42 +113,67 @@
     \vspace{-25pt}
 
     \begin{alertblock}{Main Contribution}
-        The paper presents a \textbf{hierarchichal peer organization} to optimize Bittorrent's bandwidth usage in wireless mesh networks.
+        The paper presents a \textsc{T-Man} a \textbf{gossip-based protocol} to address the \textbf{topology management problem} in large-scale, dynamic networks.
     \end{alertblock}
 
     \begin{block}{Techniques}
-        The authors base on the \textbf{Application Layer Traffic Optimization Service} which provides the peers with knowledge about the underlying network.
+        The authors introduce a generalized per-node \textbf{ranking function} to sort the set of peers even in the presence of \textbf{network churn}.
     \end{block}
 
     \begin{alertblock}{Evaluation Results}
-        They report a $27\%$ time reduction in \textbf{download time} and a $66\%$ inter-region \textbf{traffic} reduction.
+        Results show a \textbf{logarithmic} dependence between the convergence rate and the network size, and a good reliability in the presence of high churn rates.
     \end{alertblock}
 
 \end{frame}
 
 \begin{frame}
     \frametitle{Background Concepts}
-    \framesubtitle{Bittorrent \& ALTO}
+    \framesubtitle{Gossip-Based Protocols}
 
+    \textbf{Gossip Protocol:}
+    \begin{itemize}
+        \item A \textbf{\textcolor{blue}{gosspi protocol}} is a procedure of computer peer-to-peer communication.
+        \item It is based on the way \textbf{epidemics} spread (very handy).
+        \item Each node disseminates the information to communicate to all it's neighbours. Effectively \textbf{flooding} the network.
+    \end{itemize}
+    \textbf{Some Examples:}
+    \begin{itemize}
+        \item \href{https://en.wikipedia.org/wiki/Tribler}{Tribler:} is a BitTorrent peer to peer client using gossip protocols.
+        \item Gossip protocols are used to achieve and maintain distributed databases' consistency.
+        \item Gossip protocols are also widely used in routing.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Background Concepts}
+    \framesubtitle{Topology Management Problem}
+
+    \vspace{-20pt}
     \begin{columns}
-        \begin{column}{.55\textwidth}
-            \textbf{Tracker-Based Bittorrent Protocol:}
+        \begin{column}{.65\textwidth}
+            \textbf{The Topology Management Problem:}
             \begin{itemize}
-                \item \textbf{Bittorrent} is a peer-to-peer communication protocol for file sharing.
-                \item A \textbf{Bittorrent} tracker is a server that assists in the communication between peers.
-                \item It keeps track of where file copies reside.
+                \item There are a set of \textcolor{blue}{\textbf{nodes}} connected through a routed network. Each node has:
+                \begin{itemize}
+                    \item A uniquely identifiable address \texttt{c}
+                    \item A node descriptor object with relevant information.
+                    \item A \textbf{partial view}: a subset of the nodes.
+                \end{itemize}
+                \item The set of partial views make up the \textcolor{blue}{\textbf{overlay network topology}}.
             \end{itemize}
-            \textbf{The ALTO Service Architecture:}
+            \textbf{Topology Management Problem:}
             \begin{itemize}
-                \item The \textbf{\href{https://tools.ietf.org/html/rfc7285}{Application Layer Traffic Optimization}} services provide network information with the goal of modifying network resources consumption.
+                \item How to dynamically modify the \textit{partial views} so that the overlay network converges to a \textbf{target topology}?
             \end{itemize}
         \end{column}
         \hfill
         \begin{column}{.35\textwidth}
             \begin{figure}[h!]
                 \centering
-                \includegraphics[width=\textwidth]{./images/bit-torrent.png}
-                \caption{Bittorrent Tracker Protocol Architecture}
+                \includegraphics[width=.6\textwidth]{./images/torus-network-topology.png}
+                \includegraphics[width=.6\textwidth]{./images/binary-tree-network-topology.png}
+                \caption{Two example target topologies: grid (top) and binary tree (bottom).}
             \end{figure}
         \end{column}
     \end{columns}
@@ -155,44 +181,113 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Proposed Architecture}
+    \frametitle{The \textsc{T-Man} Protocol}
 
-    \vspace{-15pt}
-    \begin{columns}
-        \begin{column}{.35\textwidth}
-            \textbf{Exectuion Flow:}
-            \begin{enumerate}
-                \item Peer node queries tracker for list of peers.
-                \item Tracker forwards request to ALTO Server.
-                \item Server delegates to respective WMN Agent.
-                \item Server aggregates responses and returns sorted list to Tracker.
-                \item Tracker forwards response to asking peer.
-            \end{enumerate}
-        \end{column}
-        \begin{column}{.70\textwidth}
-            \begin{figure}[h!]
-                \centering
-                \includegraphics[width=1.05\textwidth]{./images/architecture.png}
-            \end{figure}
-        \end{column}
-    \end{columns}
+    \vspace{-25pt}
 
+    \SetKwRepeat{Do}{do}{while}
+    \begin{figure}[h!]
+    \centering
+    \begin{minipage}[t]{.45\textwidth}
+    \null 
+     \begin{algorithm}[H]
+        \DontPrintSemicolon
+        \Do{true}{
+            $p \gets$ selectPeer() \;
+            send($p$, merge($view$, $rnd.view$)) \;
+            $buffer \gets$ receive($p$) \;
+            $view \gets $ merge($view$, $buffer$) \;
+        }
+        \caption{Active Thread}
+      \end{algorithm}
+    \end{minipage}%
+    \begin{minipage}[t]{.45\textwidth}
+    \null
+     \begin{algorithm}[H]
+        \DontPrintSemicolon
+        \Do{true}{
+            $buffer_q \gets$ receive($q$) \;
+            $buffer \gets $ merge($view$, $rnd.view$) \;
+            send($q$, $buffer$) \;
+            $view \gets$ merge($buffer_q, view$) \;
+        }
+        \caption{Passive Thread}
+      \end{algorithm}
+    \end{minipage}
+    \caption{The \textsc{T-Man} Protocol.}
+    \end{figure}
+
+    \vspace{-20pt}
+
+    \begin{itemize}
+        \item The \texttt{selectPeer} method uses a rank function to determin the best peer, and the \texttt{merge} one takes the $n$ top-ranked peers.
+        \item Interesting to observe the use of a random view in the algorithm (more on that later).
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiments}
+    \framesubtitle{Or should I say simulations?}
+
+    \textbf{Simulation Experiments:}
+    \begin{itemize}
+        \item Simulations done using \textit{PeerSim} on large networks.
+        \item Authors compare three distance-based rank functions: linear, binary tree, and torus.
+        \item They measure convergence and missing links to achieve target topology.
+    \end{itemize}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=.6\textwidth]{./images/convergence.png}
+        \caption{Figure about the convergence to a torus (3D grid) w/ 2500 nodes.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiments}
+    \framesubtitle{Results}
+
+    \textbf{Simulation Results:}
+    \begin{itemize}
+        \item Authors report logarithmic convergence with respect to network size.
+        \item Full topology convergence is slower as some links are \textit{"hard"} to get.
+    \end{itemize}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=.6\textwidth]{./images/ring-results.png}
+        \caption{Results for the experiment in the ring topology.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Network Churn}
+    \framesubtitle{Definition, Importance, and Solution}
+
+    One of the biggest motivations for the work was to be able to deal with \textbf{network churn}.
+    \begin{itemize}
+        \item \textbf{\textcolor{blue}{Netowrk churn}} happens when nodes constantly leave and join the network.
+        \item How can we achieve our target topology (or maintain it) in such scenario?
+        \begin{itemize}
+            \item Authors introduce an \textit{aging} factor in the rank function, to discard \textbf{dead} links.
+            \item Convergence is still reasonable even under high churn rates.
+        \end{itemize}
+    \end{itemize}
+    The authors say that they are working in using \textsc{T-Man} in existing DHT implementations to provide with \textbf{robustness} in the event of massive failures and extreme churn.
+    \begin{itemize}
+        \item Is churn something current decentralized protocols are still worried about?
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{Open Questions}
 
+    Lastly, \textbf{some questions:}
     \begin{enumerate}
-        \item What's your opinion about the evaluation section?
-        \begin{itemize}
-            \item What experiments do they lay out?
-            \item What do they show?
-            \item What does that prove?
-            \item What is the statistical relevance of the results?
-            \item Who they compare against?
-        \end{itemize}
-        \item Are Tracker-Based Bittorent Protocols used anymore?
-        \item What's your opinion on the design choice for the ALTO Server?
+        \item Do you think gossip protocols still play a role in nowadays decentralized systems?
+        \item Why do you think the authors include a random view in the algorithm? What is it used for?
+        \item Very often, the mathematics of epidemics are used to model gossip communications. Do you think our experience with gossip protocols could help us better understand the current pandemic? (Open question: do you think there exists a feedback relation between models that mimic natural behaviours, once these are put in production and stressed?)
     \end{enumerate}
 
 \end{frame}
