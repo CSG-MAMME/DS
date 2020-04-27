@@ -1,0 +1,255 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Carlos Segarra's Beamer Presentation Template. All credits
+%% to Vincent Labatut from whom I took the template and added
+%% my own flavour to it. Kudos to <vincent.labatut@univ-avignon.fr>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup Beamer
+\documentclass[9pt,    % default is 11pt, use 10pt for more compact slides
+%    handout,            % collapse all overlays (=animations) and video-invert console text
+    english,            % presentation language (theme supports only french & english)
+    xcolor=table,       % colors in the tables
+    envcountsect,        % include section number in theorem numbers
+    aspectratio=169     % Using 16:9 aspect ratio because 2019
+]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup the theme
+%\usepackage{au/sty/beamerthemeAU}         % no option at all
+\usepackage[light]{csg-temp/sty/beamerthemeAU}   % the "light" option only changes the title and section pages
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup side notes
+\usepackage{pgfpages}                                   % comment all 3 below lines to hide notes
+%\setbeameroption{show notes}                           % alternate content and note slides
+%\setbeameroption{show only notes}                      % only note slides
+%\setbeameroption{show notes on second screen=right}    % dualscreen: right, left, top, bottom
+%\usepackage{enumitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% name of the biblatex file
+\addbibresource{biblio.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% External Packages
+\usepackage{datenumber}
+\usepackage{varwidth}
+\usepackage{multimedia}
+
+% Math Mode
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{algorithm2e}
+%\usepackage{multicol}
+%\usepackage[noend]{algpseudocode}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title and subtitle of the presentation (the latter is optional)
+\newcommand{\mainTitle}{Checkpoint Restore of Container Meshes}
+\newcommand{\secondTitle}{Design, Implementation, and Evaluation}
+\subtitle{Decentralized Systems - Project Proposal} % leave empty if no subtitle
+\title[\mainTitle] % leave empty for no title in footer
+    {\Large \mainTitle \\ \normalsize \secondTitle}
+\subtitle{Decentralized Systems - Intermediate Results Presentation} % leave empty if no subtitle
+%\subtitle{Master in Research in Informatics - MIRI}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% date of the presentation (leave empty for no date, default is today)
+\date[April 28, 2020] % leave empty for no date in footer
+    {Tuesday April 28, 2020}
+    %{\datedayname, \today}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% authors and their affiliations (the latter is optional)
+\author[] % leave empty for no author in footer
+{Carlos Segarra - \texttt{carlos.segarra@estudiant.upc.edu}}
+%{\inst{1} Computer Science Lab, Avignon University -- LIA EA 4128 \texttt{\{firstname.lastname\}@univ-avignon.fr}
+%\and \inst{2} Institute of Disruptive Innovation, University of Excellence \texttt{\{firstname.lastname\}@univ-excell.fr}
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% optional: additional logo (ex. lab)
+%\titlegraphic{\includegraphics[width=3cm,]{images/logo_FME.png}}
+% if you want several logos, put them in a box
+%\titlegraphic{\parbox{3cm}{\includegraphics[width=3cm,]{images/ceri_logo.pdf}\newline\includegraphics[width=3cm,]{images/lia_logo.pdf}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentation speciphic packages
+% \usepackage{multicol}
+% \usepackage[titles]{tocloft}
+% \renewcommand{\cftchapfont}{\normalfont\bfseries}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+\usepackage{tabularx}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%% title page
+%% Outline of the presentation
+% 1. Initial Project Presentation
+% 2. Background Concepts
+%   2.1. Containers and Namespaces
+%   2.2. C/R and Criu
+% 3. The original idea:
+% 4. What we currently have:
+%   4.1. C/R of Established TCP Connections
+%   4.2. C/R of Established TCP Connections Through a Namespace
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Project Outline}
+    \framesubtitle{Motivation \& Problem Statement}
+
+
+    \textbf{\textcolor{blue}{Problem Motivation*:}}
+    \begin{itemize}
+        \item \textbf{\textcolor{blue}{Containers}} have become the go-to alternative for sandboxing and deploying distributed applications, they build on the concept of \textbf{\textcolor{blue}{namespaces}}.
+        \item \href{https://en.wikipedia.org/wiki/Application_checkpointing}{Checkpointing} provides systems with \textbf{\textcolor{blue}{fault-tolerance}} and \textbf{\textcolor{blue}{state consistency}} enabling rollback and restore from previous stable versions.
+        \item \textbf{\textcolor{blue}{Live migration}} consists in transparently relocating running services for improved resource-management and increased QoS.
+        \item Support for checkpointing containers is very limited (\href{https://github.com/docker/cli/blob/master/experimental/checkpoint-restore.md}{[1]}, \href{https://criu.org/Docker}{[2]}) and only in experimental mode. 
+    \end{itemize}
+
+    \begin{alertblock}{Main Goal}
+        Design, implementation, and evaluation of a distributed checkpoint/restore algorithm for a container mesh (focusing on established TCP connections).
+    \end{alertblock}
+
+    \vspace{1pt}
+    \small
+    \begin{description}
+        \item *This work is complementary, and builds on, my MSc Thesis under the supervision of Jordi Guitart.
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Background Concepts}
+    \framesubtitle{Containers and Namespaces}
+
+    \vspace{-25pt}
+
+    \begin{columns}[t]
+        \begin{column}{.55\textwidth}
+            \textbf{\textcolor{blue}{Containers \& Namespaces:}}
+            \begin{enumerate}
+                \item A Linux Container is a set of processes that are \textbf{\textcolor{blue}{isolated}} from the rest of the system.
+                \item Unlike a Virtual Machine (VM), containers don't create a virtual operating system, they rather virtualize the resources a process may need (Figure \ref{fig:differences}).
+                \item For such isolation and virtualization, they rely on two kernel features: \textbf{\textcolor{blue}{cgroups}}[3,4] (control groups) and \textbf{\textcolor{blue}{namespaces}}[5].
+            \end{enumerate}
+        \end{column}
+        \begin{column}{.35\textwidth}
+            \begin{figure}[h!]
+                \includegraphics[width=\textwidth]{./images/vm_vs_container.png}
+                \caption{Virtual Machine (left) and container (right) block model.\label{fig:differences}}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Background Concepts}
+    \framesubtitle{Checkpoint-Restore}
+
+    \begin{columns}[t]
+        \begin{column}{.55\textwidth}
+            \textbf{\textcolor{blue}{Checkpoint-Restore in Userspace (CRIU):}}
+            \begin{enumerate}
+                \item \textbf{\textcolor{blue}{Checkpointing}} is a technique that provides fault-tolerance for computing systems[6].
+                \item \textbf{CRIU} is a tool to perform C/R from userspace, \textbf{\textcolor{blue}{transparently}} to the user [7,8].
+                \item It is currently integrated in several container runtimes: we will use \texttt{runc} and \texttt{containerd}.
+            \end{enumerate}
+        \end{column}
+        \begin{column}{.35\textwidth}
+            \begin{figure}[h!]
+                \includegraphics[width=\textwidth]{./images/vm_vs_container.png}
+                \caption{Virtual Machine (left) and container (right) block model.\label{fig:differences}}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{What we have}
+    
+    \begin{columns}[t]
+        \begin{column}{.4\textwidth}
+            \begin{enumerate}
+                \item[\textbf{E1}] \textbf{Microbenchmarks:}
+                \begin{itemize}
+                    \item DNS Evaluation: scalability \& liveness.
+                    \item Distributed Checkpoint Evaluation: elapsed time.
+                \end{itemize}
+                \item[\textbf{E2}] \textbf{Macrobenchmarks:}
+                \begin{itemize}
+                    \item Single container fault+restore: single and following pattern.
+                    \item Whole mesh checkpoint-restore.
+                \end{itemize}
+                \item[\textbf{E3}] \textbf{Comparison against SoA:}
+                \begin{itemize}
+                    \item Repeat E2 with Virtual Machines.
+                    \item Repeat E2 with Docker Swarm (w/out CR).
+                \end{itemize}
+            \end{enumerate}
+        \end{column} \hfill
+        \begin{column}{.6\textwidth}
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=\textwidth]{./local_benchmark.pdf}
+                \caption{Local Checkpoint-Restore of single \texttt{runc} containers with Criu. Each container runs a Redis DB with an increasing number of keys. I report average and stdev  of 1000 runs. (Plot from my thesis)}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Tentative Roadmap}
+
+    \begin{table}[h!]
+        \rowcolors{1}{blue!20}{}
+        \begin{tabular}{L{1.5cm}L{1.5cm}L{10cm}}
+            \hline
+            \rowcolor{blue!40}
+            \textbf{Weeks} & \textbf{Milestone} & \textbf{Planned Work} \\[3pt]
+            \hline \hline
+            1-2 & M1 \& M2 & First design and implementation work. Proof of concept. \\[3pt]
+            3-4-5 & M2 \& M3 & Strengthen the design and finalize all implementation. \\[3pt]  
+            6-7 & E1 \& E2 \& E3 & Design of the different experiments and evaluation. \\[3pt] 
+            8 & P1 & 05/05 Group Work Intermediate Presentation \\[3pt] 
+            9 & P & Preparatio of different dissemination materials: plots and poster. \\[3pt] 
+            10 & P2 & 22/05 Work Presentation: Poster Session \\[3pt] 
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{center}
+        \textbf{\textcolor{blue}{Suggestions \& Recommendations Welcome!}} \\ \href{mailto:carlos.segarra@estudiant.upc.edu}{carlos.segarra@estudiant.upc.edu}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Demo}
+
+    %\movie{Test}{./videos/tcp_restore_inside_ns.mp4}
+\end{frame}
+
+\begin{frame}
+    \frametitle{References}
+
+    \tiny
+
+    \begin{enumerate}
+        \item[[1]] \url{https://github.com/docker/cli/blob/master/experimental/checkpoint-restore.md}
+        \item[[2]] \url{https://criu.org/Docker}
+        \item[[3]] \url{http://man7.org/linux/man-pages/man7/cgroups.7.html}
+        \item[[4]] \url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/ch01}
+        \item[[5]] \url{http://man7.org/linux/man-pages/man7/namespaces.7.html}
+        \item[[6]] \url{https://en.wikipedia.org/wiki/Application_checkpointing}
+        \item[[7]] \url{https://en.wikipedia.org/wiki/CRIU}
+        \item[[8]] \url{https://criu.org/Main_Page}
+    \end{enumerate}
+
+\end{frame}
+
+\end{document}
