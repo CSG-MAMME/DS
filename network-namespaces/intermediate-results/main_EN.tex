@@ -33,7 +33,6 @@
 % External Packages
 \usepackage{datenumber}
 \usepackage{varwidth}
-\usepackage{multimedia}
 
 % Math Mode
 %\usepackage{algorithm}
@@ -82,6 +81,7 @@
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\usepackage{multimedia}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %%% title page
@@ -131,11 +131,11 @@
     \begin{columns}[t]
         \begin{column}{.55\textwidth}
             \textbf{\textcolor{blue}{Containers \& Namespaces:}}
-            \begin{enumerate}
+            \begin{itemize}
                 \item A Linux Container is a set of processes that are \textbf{\textcolor{blue}{isolated}} from the rest of the system.
                 \item Unlike a Virtual Machine (VM), containers don't create a virtual operating system, they rather virtualize the resources a process may need (Figure \ref{fig:differences}).
                 \item For such isolation and virtualization, they rely on two kernel features: \textbf{\textcolor{blue}{cgroups}}[3,4] (control groups) and \textbf{\textcolor{blue}{namespaces}}[5].
-            \end{enumerate}
+            \end{itemize}
         \end{column}
         \begin{column}{.35\textwidth}
             \begin{figure}[h!]
@@ -151,93 +151,80 @@
     \framesubtitle{Checkpoint-Restore}
 
     \begin{columns}[t]
-        \begin{column}{.55\textwidth}
+        \begin{column}{.65\textwidth}
             \textbf{\textcolor{blue}{Checkpoint-Restore in Userspace (CRIU):}}
-            \begin{enumerate}
+            \begin{itemize}
                 \item \textbf{\textcolor{blue}{Checkpointing}} is a technique that provides fault-tolerance for computing systems[6].
                 \item \textbf{CRIU} is a tool to perform C/R from userspace, \textbf{\textcolor{blue}{transparently}} to the user [7,8].
                 \item It is currently integrated in several container runtimes: we will use \texttt{runc} and \texttt{containerd}.
-            \end{enumerate}
+            \end{itemize}
+            \textbf{\textcolor{blue}{Checkpointing Established TCP Connections:}}
+            \begin{itemize}
+                \item With the \texttt{TCP\_REPAIR} socket option added to kernel 3.5, it becomes possible to C/R established TCP sockets[9].
+                \item Together with the support for restoring into existing namespaces, we can replicate the structure in Figure~\ref{fig:architecture}.
+            \end{itemize}
         \end{column}
-        \begin{column}{.35\textwidth}
-            \begin{figure}[h!]
-                \includegraphics[width=\textwidth]{./images/vm_vs_container.png}
-                \caption{Virtual Machine (left) and container (right) block model.\label{fig:differences}}
+        \begin{column}{.3\textwidth}
+            \vspace{-20pt}
+            \begin{figure}[t!]
+                \includegraphics[width=.6\textwidth]{./images/tcp_arch.png}
+                \caption{Architecture of the initial experiment.\label{fig:architecture}}
             \end{figure}
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{What we have}
+    \frametitle{Status of the Project}
+    \framesubtitle{What we have}
     
+    \textbf{\textcolor{blue}{(Not) Live Demo!}}
+    \begin{center}
+        \movie[width=.7\textwidth,height=.393\textwidth,showcontrols=true,poster,start=5s]{Click to play}{./videos/tcp_restore_inside_ns.mp4}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Status of the Project}
+    \framesubtitle{Problems Encoutnered and Moving Forward}
+
     \begin{columns}[t]
-        \begin{column}{.4\textwidth}
+        \begin{column}{.45\textwidth}
+            \textbf{\textcolor{blue}{Problems Encountered:}}
             \begin{enumerate}
-                \item[\textbf{E1}] \textbf{Microbenchmarks:}
-                \begin{itemize}
-                    \item DNS Evaluation: scalability \& liveness.
-                    \item Distributed Checkpoint Evaluation: elapsed time.
-                \end{itemize}
-                \item[\textbf{E2}] \textbf{Macrobenchmarks:}
-                \begin{itemize}
-                    \item Single container fault+restore: single and following pattern.
-                    \item Whole mesh checkpoint-restore.
-                \end{itemize}
-                \item[\textbf{E3}] \textbf{Comparison against SoA:}
-                \begin{itemize}
-                    \item Repeat E2 with Virtual Machines.
-                    \item Repeat E2 with Docker Swarm (w/out CR).
-                \end{itemize}
+                \item Lack of support in container runtimes.
+                \item On-going project and very kernel-dependent.
+                \item Lack of updated documentation, source as reference, what slows the development.
             \end{enumerate}
-        \end{column} \hfill
-        \begin{column}{.6\textwidth}
-            \begin{figure}[h!]
-                \centering
-                \includegraphics[width=\textwidth]{./local_benchmark.pdf}
-                \caption{Local Checkpoint-Restore of single \texttt{runc} containers with Criu. Each container runs a Redis DB with an increasing number of keys. I report average and stdev  of 1000 runs. (Plot from my thesis)}
-            \end{figure}
+            \textbf{\textcolor{blue}{Alternatives:}}
+            \begin{enumerate}
+                \item Minimize the abstraction layers.
+                \item On-going means active community.
+                \item \texttt{Podman}, \texttt{runc}, \texttt{LXC} have it in their stack.
+            \end{enumerate}
+        \end{column}
+        \begin{column}{.45\textwidth}
+            \textbf{\textcolor{blue}{Moving forward:}}
+            \begin{enumerate}
+                \item Migrate server to a \emph{different} namespace (or machine) with the \emph{same} IP.
+                \item Integrate with the \texttt{runc} runtime.
+                \item Syncrhonize a C/R among a set of containers (or process).
+                \begin{enumerate}
+                    \item "Zero-Downtime" migration.\\[5pt]
+                    \item Synchronous migration (close and re-establish connections).
+                \end{enumerate}
+            \end{enumerate}
         \end{column}
     \end{columns}
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Tentative Roadmap}
-
-    \begin{table}[h!]
-        \rowcolors{1}{blue!20}{}
-        \begin{tabular}{L{1.5cm}L{1.5cm}L{10cm}}
-            \hline
-            \rowcolor{blue!40}
-            \textbf{Weeks} & \textbf{Milestone} & \textbf{Planned Work} \\[3pt]
-            \hline \hline
-            1-2 & M1 \& M2 & First design and implementation work. Proof of concept. \\[3pt]
-            3-4-5 & M2 \& M3 & Strengthen the design and finalize all implementation. \\[3pt]  
-            6-7 & E1 \& E2 \& E3 & Design of the different experiments and evaluation. \\[3pt] 
-            8 & P1 & 05/05 Group Work Intermediate Presentation \\[3pt] 
-            9 & P & Preparatio of different dissemination materials: plots and poster. \\[3pt] 
-            10 & P2 & 22/05 Work Presentation: Poster Session \\[3pt] 
-            \hline
-        \end{tabular}
-    \end{table}
-
-    \begin{center}
-        \textbf{\textcolor{blue}{Suggestions \& Recommendations Welcome!}} \\ \href{mailto:carlos.segarra@estudiant.upc.edu}{carlos.segarra@estudiant.upc.edu}
-    \end{center}
-
-\end{frame}
-
-\begin{frame}
-    \frametitle{Demo}
-
-    %\movie{Test}{./videos/tcp_restore_inside_ns.mp4}
+    
 \end{frame}
 
 \begin{frame}
     \frametitle{References}
 
-    \tiny
+    \textbf{\textcolor{blue}{Some links:}}
+
+    \small
 
     \begin{enumerate}
         \item[[1]] \url{https://github.com/docker/cli/blob/master/experimental/checkpoint-restore.md}
@@ -248,8 +235,24 @@
         \item[[6]] \url{https://en.wikipedia.org/wiki/Application_checkpointing}
         \item[[7]] \url{https://en.wikipedia.org/wiki/CRIU}
         \item[[8]] \url{https://criu.org/Main_Page}
+        \item[[9]] \url{https://criu.org/TCP_connection}
     \end{enumerate}
 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Questions \& Discussion}
+
+    \begin{center}
+        Thank you for your attention,\\[5pt]
+
+        \Large
+        \textbf{\textcolor{blue}{Observations, Doubts \& Suggestions Welcome}}\\[25pt]
+
+        \normalsize
+        Follow the development:\\ \url{https://github.com/live-containers/live-migration}\\[15pt]
+        \url{carlos.segarra@estudiant.upc.edu}
+    \end{center}
 \end{frame}
 
 \end{document}
