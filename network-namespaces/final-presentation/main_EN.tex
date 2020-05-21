@@ -130,7 +130,7 @@
 
     \textbf{\textcolor{blue}{Introduction to runC:}}
     \begin{itemize}
-        \item \textbf{\textcolor{blue}{runc}} is a tool to spawn conatiners according to the OCI specification.
+        \item \textbf{\textcolor{blue}{runc}} is a tool to spawn containers according to the OCI specification.
         \item Rather than \textbf{\textcolor{blue}{images}}, it relies on OCI bundles: \texttt{config.json} + \texttt{rootfs}.
         \item It sits at the core of most container engines as depicted in Figure~\ref{fig:runc}.
     \end{itemize}
@@ -139,6 +139,35 @@
         \includegraphics[width=.5\textwidth]{./images/runc.png}
         \caption{Placing runC in the call stack of standard container engines.\label{fig:runc}}
     \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Background Concepts}
+    \framesubtitle{What is checkpointing and how can we do it?}
+
+    \vspace{-15pt}
+
+    \begin{columns}[t]
+        \begin{column}{.65\textwidth}
+            \textbf{Checkpoint/Restore:}
+            \begin{itemize}
+                \item \textbf{\textcolor{blue}{Checkpointing}} is a technique to \textbf{\textcolor{blue}{save}} the state of a running process.
+                \item The \textbf{\textcolor{blue}{state}} is made up of: memory, pipes, sockets, ...
+                \item This state is used to \textbf{\textcolor{blue}{restore}} the process.
+                \item Originated in HPC and popularized through Virtual Machines.
+                \item \textbf{\textcolor{blue}{CRIU (Checkpoint/Restore in Userspace)}} is a tool to perform C/R from userspace transparently to the user.
+            \end{itemize}
+        \end{column}\hfill
+        \begin{column}{.35\textwidth}
+            \vspace{-18pt}
+            \begin{figure}
+                \centering
+                \includegraphics[width=.8\textwidth]{./images/cr.png}
+                \caption{Basic working principle of C/R.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
 \end{frame}
 
 \begin{frame}
@@ -227,7 +256,7 @@
     \begin{itemize}
         \item \texttt{t=0} start client, dump server at \texttt{t=6,10,14} restore immediately.
         \item Where does the difference in downtime comes from?
-        \item We don't know! Hidden caching, TCP's congestion and holdback times, \texttt{iPerf3}'s reactivity, ...
+        \item We don't know! Hidden caching, TCP's congestion and hold back times, \texttt{iPerf3}'s reactivity, ...
     \end{itemize}
 
     \vspace{-5pt}
@@ -250,7 +279,7 @@
             \begin{itemize}
                 \item Migration within the same machine:
                 \begin{itemize}
-                    \item Use namespaces and virtual ethernet pairs (Figure \ref{fig:architecture}).
+                    \item Use namespaces and virtual Ethernet pairs (Figure \ref{fig:architecture}).
                     \item Supported by runC containers (use-case particularly suitable).
                     \item Demonstrated in intermediate results presentation.
                 \end{itemize}
