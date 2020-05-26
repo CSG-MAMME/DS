@@ -1,1 +1,12 @@
 \section{Conclusions \& Future Work} \label{sec:conclusion}
+
+In this short paper we have presented a preliminary evaluation of live migration of established TCP connections using Checkpoint-Restore In Userspace (CRIU).
+
+In particular, we have implemented proofs of concept for migration between different machines and different namespaces within the same machine.
+In addition to that, we have presented a benchmark of the impact of migrating a network-intensive server with regard to the perceived throughput from the client endpoint.
+Our results show that migration introduces little overhead whereas checkpointing and restoring at a later point in time has an impact on connection restore time.
+Lastly, our results also show that choosing to run the to-be-migrated server within a \runc container introduces minimal overhead when compared to checkpoint-restore of standalone processes.
+As a consequence, we consider \criu to be mature enough to be integrated in bigger container stacks, particularly in container orchestrators were the ability to checkpoint established network connections could be of great use for load-balancing purposes.
+
+Moving forward, we want to replicate the results here presented when migrating to different environments where migration speed could be the bottleneck, and the impact of traditional live migration techniques (such as pre-copy or lazy migration) could have to speed up the process.
+We are also interested in evaluating the system on a more realistic use-case like an online gaming service, and integrate our work in an orchestrator tool to add support for distributed migration.

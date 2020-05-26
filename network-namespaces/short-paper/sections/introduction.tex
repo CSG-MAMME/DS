@@ -2,4 +2,9 @@
 
 Containers have become the \textit{de-facto} alternative for managing application's lifecycle in the cloud.
 With the progressive shift from bare-metal, to virtualized servers, and now with containerization, cloud tenants aim to find the balance between optimal resource usage and quality of service perceived by the user.
-Microservices, serverless, cloud-native, are 
+A key aspect to achieving a good QoS is the ability to manage resources efficiently, in particular load-balancing.
+
+Checkpoint-Restore is, through live migration, a technique to provide load-balancing capabilities to cloud tenants transparently to the user.
+By dumping the state of an application and restoring it in another physical instance, it will resume from the exact point it was dumped at.
+As a consequence the user will perceive a minimal downtime and the tenant will have re-allocated resources.
+Checkpoint-Restore in Userspace (CRIU) is a software tool to achieve :s
