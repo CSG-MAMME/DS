@@ -12,7 +12,7 @@ To re-establish the connection from the newly generated socket, the first thing 
 Then, the previously dumped parameters can be set, and upon \texttt{connect()} the socket goes directly into \texttt{ESTABLISHED} mode without acknowledgment from the other end, and a \texttt{RST} packet is sent to resume communication.
 
 % TABLE FILTERING
-The last missing piece is what happens is the remote end tries to send a packet to its, seemingly open, TCP socket whilst the other peer is down.
+The last missing piece is what happens if the remote end tries to send a packet to its, seemingly open, TCP socket whilst the other peer is down.
 Were we to ignore this fact, once the packet reached our kernel this, given that the socket is closed, would send a \texttt{RST} to the other end, and our whole illusion would collapse.
 To overcome this issue, upon checkpoint we include a set of rules to the \texttt{netfilter}~\cite{netfilter} IP routing table to drop all packets.
 We include the set of rules in Table~\ref{table:iptables-rules}.
@@ -20,21 +20,21 @@ We include the set of rules in Table~\ref{table:iptables-rules}.
     \centering
     {\ttfamily 
     \begin{tabular}{p{1.2cm}p{0.5cm}p{0.5cm}p{0.7cm}p{0.7cm}p{2.0cm}}
-        \multicolumn{6}{l}{Chain INPUT (policy ACCEPT)} \\
-        target & prot & opt & source & dest & \\
-        CRIU & all & -- & .../0 & .../0 & \\
-        & & & & & \\
-        \multicolumn{6}{l}{Chain FORWARD (policy ACCEPT)} \\
-        target & prot & opt & source & dest & \\
-        & & & & & \\
-        \multicolumn{6}{l}{Chain OUTPUT (policy ACCEPT)} \\
-        target & prot & opt & source & dest & \\
-        CRIU & all & -- & .../0 & .../0 & \\
-        & & & & & \\
-        \multicolumn{6}{l}{Chain CRIU} \\
-        target & prot & opt & source & dest & \\
-        ACCEPT & all & -- & .../0 & .../0 & mark 0xc114 \\
-        DROP & all & -- & .../0 & .../0 & \\
+        \multicolumn{6}{l}{Chain INPUT (policy ACCEPT)} \\[3pt]
+        target & prot & opt & source & dest & \\[3pt]
+        CRIU & all & -- & .../0 & .../0 & \\[3pt]
+        & & & & & \\[3pt]
+        \multicolumn{6}{l}{Chain FORWARD (policy ACCEPT)} \\[3pt]
+        target & prot & opt & source & dest & \\[3pt]
+        & & & & & \\[3pt]
+        \multicolumn{6}{l}{Chain OUTPUT (policy ACCEPT)} \\[3pt]
+        target & prot & opt & source & dest & \\[3pt]
+        CRIU & all & -- & .../0 & .../0 & \\[3pt]
+        & & & & & \\[3pt]
+        \multicolumn{6}{l}{Chain CRIU} \\[3pt]
+        target & prot & opt & source & dest & \\[3pt]
+        ACCEPT & all & -- & .../0 & .../0 & mark 0xc114 \\[3pt]
+        DROP & all & -- & .../0 & .../0 & \\[3pt]
     \end{tabular}
     }
     \caption{Output of running \texttt{iptables -t filter -L -n}.\label{table:iptables-rules}}.
@@ -43,7 +43,8 @@ We include the set of rules in Table~\ref{table:iptables-rules}.
 \subsection{How to efficiently reuse IP addresses?}
 
 A caveat of restoring established TCP connections is that, without bringing down both peers, we can not circumvent the negotiated \texttt{IP:PORT} pairs.
-As a consequence, the same IP address and port must be available at restore time, otherwise when the remote peer receives the \texttt{RST} package it will immediately close the connection.
+As a consequence, the same IP address and port must be available at restore time.
+Otherwise, when the remote peer receives the \texttt{RST} package it will immediately close the connection.
 Re-using an IP address is achievable using locally scoped addresses or network namespaces.
 In our experiments we tested both.
 

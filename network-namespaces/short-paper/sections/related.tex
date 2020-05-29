@@ -1,1 +1,14 @@
 \section{Related Work} \label{sec:related}
+
+Other than the technical references introduced in \S\ref{sec:background} a great starting point for namespaces and containers are a series of articles by Michael Kerrisk published in LWN~\cite{Kerrisk2013}.
+Similarly, for Checkpoint/Restore Barker~\cite{Barker2014} draws clearly the different approaches different software tools take.
+
+Reber has a series of articles that describe \criu's architecture and how it can be leveraged in different use-cases~\cite{Reber2016,Reber2016b,Reber2019,Reber2016b}.
+Venkatesh presents a system for fast in-memory migration of Docker containers using \criu.
+The author focuses on same-machine restore, hence why his approach is not applicable in our case.
+
+Lastly, and with regard to live migration of running processes, Clark \textit{et. al}~\cite{Clark2005} have a great survey on the topic.
+An effort to optimize image transferring in the event of a live migration using \criu was presented in 2018~\cite{Stoyanov2018}, and the findings there presented are soon to be integrated in mainline \criu.
+Two different models for efficient live migration of containers in HPC were also presented through 2019~\cite{Sindi2019,Mavus2019}.
+Our approach focuses on established TCP connections, which was a overlooked by these previous approaches.
+An in-depth walkthrough of the kernel internals that allow for such a migration were presented by Corbet in 2012~\cite{Corbet12}.

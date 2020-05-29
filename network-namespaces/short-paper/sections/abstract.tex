@@ -1,5 +1,13 @@
 \begin{abstract}
+    One of the major hurdles for containers to become the cloud tenants' choice for application sandboxing is fault-tolerancy and load balancing.
+    Checkpoint/Restore provides an efficient solution as it enables to save snapshots of running programs from which execution can be restored.
+    Checkpointing and live migration for virtual machines has been around for several years now and, albeit less efficient, it provides with the robustness that a datacenter requires.
+    However, checkpoint/restore (C/R) of running containers is still an open and active area of research.
+    The biggest attempt to filling such a gap is Checkpoint-Restore in Userspace (CRIU) a software tool designed to dump, manage, and restore running processes by leveraging existing interfaces of the Linux Kernel.
+    It does so completely from user-space and fully transparently.
 
-    In this paper 
-
+    In this work we present a proof of concept implementation for live migration of established TCP connections of runC containers.
+    Although C/R of established sockets is already available with \criu, migrating such a connection is left to the user, hence the novelty of our holistic approach.
+    We also present a benchmark of the downtime experienced by a client when a network-intensive server is dumped and restored.
+    Lastly, this short paper is a work in progress towards achieving C/R of container clusters to provide tools such as \textsc{Kubernetes} with fast restore times in the event of a node failure.
 \end{abstract}

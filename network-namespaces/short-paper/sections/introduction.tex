@@ -1,17 +1,17 @@
 \section{Introduction} \label{sec:introduction}
 
-Containers have become the \textit{de-facto} alternative for managing application's lifecycle in the cloud.
-With the progressive shift from bare-metal, to virtualized servers, and now with containerization, cloud tenants aim to find the balance between optimal resource usage and quality of service perceived by the user.
+Containers have become the \textit{de-facto} alternative for managing application's life cycle in the cloud.
+With the progressive shift from bare-metal, to virtualized servers, and now with containerization, cloud tenants aim to find the balance between optimal resource usage and quality of service (QoS) perceived by the user.
 A key aspect to achieving a good QoS is the ability to manage resources efficiently, in particular load-balancing.
 
 Checkpoint-Restore is, through live migration, a technique to provide load-balancing capabilities to cloud tenants transparently to the user.
 By dumping the state of an application and restoring it in another physical instance, it will resume from the exact point it was dumped at.
 As a consequence the user will perceive a minimal downtime and the tenant will have re-allocated resources.
 Checkpoint-Restore in Userspace (CRIU)~\cite{criu-main-page} is a software tool to dump and restore processes transparently to the user.
-It targets specially applications running inside containers, and is already used in a variety of projects and companies~\cite{Tucker18}.
+It targets specially applications running inside containers, and is already used in a variety of projects and companies such as Google~\cite{Tucker18}.
 
 In this paper we present a proof of concept implementation of live migration of containers with established TCP connections.
 Although the checkpointing of established TCP sockets is already supported in CRIU~\cite{criu-tcp}, the work we present covers the necessary additions to safely migrate it to a different environment: namely routing filters and address reuse.
 We test migration between different virtual machines and network namespaces, and provide a benchmark of the throughput downtime perceived by the client in a network intensive application.
 
-Our results suggest that the technology is mature enough to be embedded in container orchestration engines where this additional feature could be of particular interest towards distributed migration of containers.
+Our results suggest that the technology is mature enough to be embedded in container orchestration engines where this additional feature could be of particular interest towards distributed migration of container clusters.
